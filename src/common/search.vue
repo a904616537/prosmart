@@ -1,0 +1,133 @@
+<template>
+	<div class="search">
+		<div class="search-bar">
+			<input type="text" class="input-style" placeholder="请输入球队名称或球队代码" @click="focus"/>
+			<div class="icon">
+				<img src="static/icons/search.png" class="icon-style" />
+			</div>
+		</div>
+		<div class="search-list" v-show="showList">
+			<li>Sportgo冰球队，上海市静安区，青年组</li>
+			<li>Sportgo冰球分队，湖南省长沙市，少年组</li>
+		</div>
+		<div class="result">
+			<div class="head">
+				<div class="head-img" style="background-image: url('static/imgs/ball-head.jpg')"></div>
+				<div class="title">Sportgo冰球队</div>
+			</div>
+			<div class="title">球队基础信息</div>
+			<div class="card">
+				教练:<span>Coach</span><br/>
+				人数:<span>15人</span><br/>
+				组别:<span>青年组</span><br/>
+				地址:<span>上海市，静安区，康定路，****大楼</span>
+			</div>
+		</div>
+		<input type="text" class="input-style" placeholder="请输入球队代码" />
+		<div class="puplic-btn" @click="join">申请加入球队</div>
+		<v-popout class="pop-style" v-show="is_show" :click="close">
+			<div class="text">申请成功，等待审核!</div>
+			<div class="puplic-popbtn">确定</div>
+		</v-popout>
+	</div>
+</template>
+
+<script>
+	export default{
+		name : 'search',
+		data() {
+			return {
+				showList : false,
+				is_show  : false
+			}
+		},
+		methods: {
+			focus() {
+				this.showList = !this.showList
+			},
+			join() {
+				this.is_show = !this.is_show
+			},
+			close() {
+				this.is_show = false
+			}
+		}
+	}
+</script>
+
+<style lang="scss">
+	$puplic-space: 20px;
+	.search{
+		padding: 0 10px;
+		font-size: 14px;
+		.puplic-btn{
+			margin-top: $puplic-space;
+		}
+	}
+	.search-bar{
+		position: relative;
+		.icon-style{
+			width: $puplic-space;
+			height: $puplic-space;
+			position: absolute;
+			right: $puplic-space;
+			top: $puplic-space/2;
+		}
+	}
+	.input-style{
+		width: 100%;
+		line-height: $puplic-space*2;
+		padding: 0 $puplic-space;
+		border: 1px solid rgba(33,36,54,.1);
+		border-radius: $puplic-space*2;
+		outline: none;
+		color: #313131;
+	}
+	.search-list{
+		text-align: left;
+		color: #aaa;
+		li{
+			list-style: none;
+			border-bottom: 1px solid rgba(33,36,54,.1);
+			line-height: 30px;
+			margin-top: $puplic-space/2;
+		}
+	}
+	.result{
+		text-align: left;
+		.head{
+			padding: 30px 0 0;
+			text-align: center;
+		}
+		.title{
+			font-family: fontM;
+			font-size: 15px;
+			line-height: 40px;
+		}
+		.head-img{
+			width: $puplic-space*5;
+			height: $puplic-space*5;
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-position: center;
+			border-radius: 50px;
+			margin: 0 auto;
+		}
+		.card{
+			padding: $puplic-space/2;
+			box-shadow: 0 2px 4px rgba(0,0,0,.35);
+			border-radius: 8px;
+			font-size: 14px;
+			line-height: 30px;
+			margin-bottom: $puplic-space;
+			span{
+				margin-left: $puplic-space/2;
+			}
+		}
+	}
+	.pop-style{
+		.text{
+			margin-bottom: $puplic-space;
+		}
+	}
+</style>

@@ -1,16 +1,7 @@
 <template>
     <div id="app">
-        <Card style="width:320px">
-            <div style="text-align:center">
-                <img src="./assets/logo.png">
-                <h3>iView 安装测试！</h3>
-                
-                <Slider v-model="value1"></Slider>
-            </div>
-        </Card>
-
-
-        <router-view/>
+        <v-nav />
+        <router-view />
     </div>
 </template>
 
@@ -37,12 +28,54 @@ export default {
 </script>
 
 <style>
+@font-face{
+    font-family: fontM;
+    src: url('/static/fonts/Rubik-Medium.ttf');
+}
+@font-face{
+    font-family: fontR;
+    src: url('/static/fonts/Rubik-Regular.ttf');
+}
 #app {
-    font-family             : 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing  : antialiased;
     -moz-osx-font-smoothing : grayscale;
     text-align              : center;
-    color                   : #2c3e50;
-    margin-top              : 60px;
+    color                   : #313131;
+    font-family: fontR; 
+}
+a,a:hover,a:visited,a:active{
+    color: #313131;
+}
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: #AAAAAA;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color: #AAAAAA;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color: #AAAAAA;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: #AAAAAA;
+}
+.puplic-btn{
+    width: 100%;
+    font-size: 15px;
+    background-color: #212436;
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.35);
+    line-height: 40px;
+    font-family: fontM;
+}
+.puplic-popbtn{
+    background-color: #212436;
+    color: #fff;
+    border-radius: 8px;
+    line-height: 36px;
+    padding: 0 20px;
+    font-family: fontM;
+    font-size: 15px;
+    display: inline-block;
 }
 </style>

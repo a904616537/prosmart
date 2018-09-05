@@ -4,10 +4,10 @@ import Vue    from 'vue'
 import App    from './App'
 import router from './router'
 import Store  from './store'
-import Mixins from './Mixins';
-import iView  from 'iview';
+import Mixins from './Mixins'
+import iView  from 'iview'
 
-import 'iview/dist/styles/iview.css';
+import 'iview/dist/styles/iview.css'
 
 Vue.config.productionTip = false
 
