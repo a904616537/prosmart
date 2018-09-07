@@ -46,6 +46,9 @@ export default {
 a,a:hover,a:visited,a:active{
     color: #313131;
 }
+li{
+    list-style-type: none;
+}
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color: #AAAAAA;
 }
@@ -77,5 +80,8 @@ a,a:hover,a:visited,a:active{
     font-family: fontM;
     font-size: 15px;
     display: inline-block;
+}
+.title,.lesson .content .title,.profile .user-name,.profile .profile-btn,.profileEditor .profile-btn,.profileEditor .profile-input,.search .result .title,.video .video-bottom,.video .content{
+    font-family: fontM;
 }
 </style>

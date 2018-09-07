@@ -76,6 +76,7 @@
 	}
 	.title{
 		font-family: fontM;
+		font-weight: 500;
 		line-height: $puplic-space*2;
 		font-size: $title;
 	}

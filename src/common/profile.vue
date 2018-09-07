@@ -77,8 +77,8 @@
 			font-size: 15px;
 			line-height: 36px;
 			font-family: fontM;
-			padding: 0 25px;
 			font-weight: 500;
+			padding: 0 25px;
 			float: right;
 			margin-top: 100px;
 		}

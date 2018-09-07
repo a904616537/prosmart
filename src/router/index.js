@@ -4,6 +4,9 @@ import Homepage from '@/common/homepage' //公共首页
 import Search from '@/common/search' //搜索团队
 import Profile from '@/common/profile' //个人信息
 import ProfileEditor from '@/common/profileEditor' //编辑个人信息
+import Video from '@/common/video' //视频
+import Lesson from '@/common/lesson' //课程列表
+import LessonItem from '@/common/lessonItem' //详细课程
 
 import Navbar from '@/components/navbar'
 import Popout from '@/components/popout' //弹框
@@ -30,6 +33,18 @@ const routers = [
 	{
 		path      : '/editor',
 		component : ProfileEditor
+	},
+	{
+		path      : '/video',
+		component : Video
+	},
+	{
+		path      : '/lesson',
+		component : Lesson
+	},
+	{
+		path      : '/lessonItem',
+		component : LessonItem
 	}
 ]
 
