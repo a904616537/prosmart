@@ -7,6 +7,8 @@ import ProfileEditor from '@/common/profileEditor' //编辑个人信息
 import Video from '@/common/video' //视频
 import Lesson from '@/common/lesson' //课程列表
 import LessonItem from '@/common/lessonItem' //详细课程
+import Team from '@/common/team' //团队
+import Group from '@/common/group' //团队信息
 
 import Navbar from '@/components/navbar'
 import Popout from '@/components/popout' //弹框
@@ -45,6 +47,14 @@ const routers = [
 	{
 		path      : '/lessonItem',
 		component : LessonItem
+	},
+	{
+		path      : '/team',
+		component : Team
+	},
+	{
+		path      : '/group',
+		component : Group
 	}
 ]
 

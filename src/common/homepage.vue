@@ -73,6 +73,9 @@
 			font-size: 14px;
 			margin-top: $puplic-space/2;
 		}
+		.team{
+			padding: 0;
+		}
 	}
 	.title{
 		font-family: fontM;
