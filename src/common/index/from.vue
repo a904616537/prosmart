@@ -128,8 +128,7 @@
 							duration : 1,
 							content : '提交成功',
 							onClose : () => {
-								console.log('store', this.identity)
-								
+								this.$router.push({path : 'search'});
 							}
 						});
 					}, 1000);
