@@ -90,7 +90,7 @@
 						onClose : () => {
 							if(result.identity) {
 								this.$router.push({path : 'home'});
-							} else this.$router.push({path : 'from'});
+							} else this.$router.push({path : 'from', query : {type : this.selectRole.type}});
 							
 						}
 					});

@@ -59,6 +59,7 @@
 		name : 'from',
 		data() {
 			return {
+				type : 0,
 				loading : false,
 				teams : [
 					'team 1',
@@ -113,8 +114,9 @@
 			},
 			onPut() {
 				console.log(Vue.setting.api + '/identity')
-				axios.put(Vue.setting.api + '/identity',{
-					_id  : this.identity._id,
+				axios.post(Vue.setting.api + '/identity',{
+					user : this.user._id,
+					type : this.type,
 					info : this.data
 				})
 				.then(result => result.data)
@@ -163,9 +165,11 @@
                         ])
                     }
                 });
-                this.onPut();
-                
+                this.onPut();   
 			}
+		},
+		mounted() {
+			this.type = this.$reoute.query.type;
 		}
 	}
 </script>
@@ -188,6 +192,7 @@
 	border-top    : none;
 	border-left   : none;
 	border-right  : none;
+	border-radius : 0;
 }
 .from ul li label {
 	width       : 5vw;
@@ -207,7 +212,7 @@
 .from ul li .time {
 	width: 10vw;
 	margin-right: 1vw;
-	height: 10pt;
+	height: 12pt;
 	border-bottom : 1px solid #ccc;
 }
 .from ul li .rounds {
