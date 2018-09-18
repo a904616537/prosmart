@@ -59,9 +59,9 @@
 		name : 'from',
 		data() {
 			return {
-				type : 0,
+				type    : this.$route.query.type,
 				loading : false,
-				teams : [
+				teams   : [
 					'team 1',
 					'team 2',
 					'team 3',
@@ -167,9 +167,6 @@
                 });
                 this.onPut();   
 			}
-		},
-		mounted() {
-			this.type = this.$reoute.query.type;
 		}
 	}
 </script>
