@@ -2,40 +2,80 @@
 	<div class="team">
 		<div class="title">我的球队</div>
 		<div class="content">
-			<div class="card">
-				<div class="team-name">Sportgo冰球队</div>
-				<div class="operate"><img src="static/icons/point.png" class="card-icon"/></div>
+
+			<div v-for="(item, index) in team" :key="index" class="card">
+				<div class="team-name">{{item.info?item.info.name:item.uid}}</div>
+				<div v-if="identity._id == item.identity" class="operate"><img src="static/icons/point.png" class="card-icon"/></div>
+				<span v-else class="card-btn" @click="exit(item)">退出球队</span>
 			</div>
-			<div class="card">
-				<div class="team-name">Sportgo冰球队</div>
-				<span class="card-btn" @click="exit">退出球队</span>
-			</div>
+
 		</div>
 		<v-popout class="pop-style" v-show="showPop" :click="close">
 			<div class="text">确认退出球队？</div>
 			<div class="btn">
 				<div class="puplic-popbtn" @click="close">取消</div>
-				<div class="puplic-popbtn">确认</div>
+				<div class="puplic-popbtn" @click="onExit">确认</div>
 			</div>
 		</v-popout>
 	</div>
 </template>
 
 <script>
+	import Vue                    from 'vue';
+	import axios                  from 'axios';
+	import {mapState, mapActions} from 'vuex';
 	export default{
 		name : 'team',
 		data() {
 			return {
-				showPop : false
+				showPop : false,
+				team    : []
 			}
 		},
+		computed : mapState({
+			user     : state => state.User.user,
+			token    : state => state.User.token,
+			is_login : state => state.User.isLogin,
+			identity : state => state.User.identity
+        }),
 		methods: {
-			exit() {
+			...mapActions([
+	            'onShowNav',
+	        ]),
+			getMyTeam() {
+				axios.get(Vue.setting.api + '/team/player', {
+					params: {identity_id : this.identity._id}
+				})
+				.then(result => result.data)
+				.then(result => this.team = result)
+	            .catch(err => {
+	                console.log('error', err)
+	            })
+			},
+			exit(item) {
 				this.showPop = !this.showPop
+				this.exitTeam = item;
 			},
 			close() {
 				this.showPop = false
+			},
+			onExit() {
+				axios.delete(Vue.setting.api + '/team/player', {
+					params: {
+						_id    : this.exitTeam._id,
+						player : this.identity._id
+					}
+				})
+				.then(result => result.data)
+				.then(result => this.getMyTeam())
+	            .catch(err => {
+	                console.log('error', err)
+	            })
 			}
+		},
+		mounted() {
+			this.onShowNav(true);
+			this.getMyTeam();
 		}
 	}
 </script>

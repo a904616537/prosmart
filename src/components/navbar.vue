@@ -1,27 +1,29 @@
 <!--  导航  -->
 <template>
-	<div class="navbar">
+	<div v-if="shownav" class="navbar">
 		<div class="head">
 			<img src="static/logo/Sportgo_Logo_RGB.png" class="logo-img" alt="sportgo" />
 			<img src="static/icons/menu.png" class="icon" alt="menu" @click="showMenu"/>
 		</div>
 		<div class="dropdown" v-show="dropdown">
-			<li>主页</li>
-			<li><span @click="me">我的<img src="static/icons/down.png" class="drop-icon" /></span>
+			<li @click="toPage('/home')">主页</li>
+			<li>
+				<span @click="me">我的<img src="static/icons/down.png" class="drop-icon" /></span>
 				<div class="drop" v-show="showMe">
-					个人中心<br>退出
+					<a @click="toPage('/profile')">个人中心</a><br>退出
 				</div>			
 			</li>
-			<li>冰球课程</li>
-			<li>新增球队</li>
-			<li>我的球队</li>
-			<li>活动日历</li>
-			<li>冰球商店</li>
+			<li @click="toPage('/lesson')">冰球课程</li>
+			<li @click="toPage('/search')">发现球队</li>
+			<li @click="toPage('/team')">我的球队</li>
+			<li @click="toPage('/profile')">活动日历</li>
+			<li @click="toPage('/profile')">冰球商店</li>
 		</div>
 	</div>
 </template>
 
 <script>
+	import {mapState, mapActions} from 'vuex';
 	export default{
 		name : 'navbar',
 		data() {
@@ -30,7 +32,14 @@
 				showMe   : false
 			}
 		},
+		computed : mapState({
+			shownav : state => state.Setting.shownav,
+        }),
 		methods: {
+			toPage(path) {
+				this.showMenu();
+				this.$router.push({path});
+			},
 			showMenu() {
 				this.dropdown = !this.dropdown
 				if(this.dropdown)

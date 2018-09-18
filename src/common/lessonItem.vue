@@ -2,8 +2,8 @@
 	<div class="lessonItem">
 		<div class="head">
 			<div>
-				<img src="static/icons/video-back.png" class="back-icon" />
-				课程1
+				<img src="static/icons/video-back.png" class="back-icon" @click="onBack"/>
+				{{data.title}}
 			</div>
 			<div>
 				<img src="static/icons/level.png" class="level-icon" />
@@ -12,97 +12,105 @@
 		<div class="content">
 			<div class="title">
 				<div>
-					初级课程<span>|</span>课程1
+					{{level.get(data.level)}}<span>|</span>{{data.title}}
 				</div>
 				<div>
 					<img src="static/icons/share.png" class="share-img" />
 					分享
 				</div>
 			</div>
-			<div class="img-style" style="background-image: url('static/imgs/pic-1.jpg')"></div>
+			<div class="img-style" :style="'background-image: url('+data.img+')'"></div>
 			<div class="item item-intro">
 				<div class="label">
 					<div class="intro">简介: </div>
-					欢迎来到冰球课程
+					{{data.title}}
 				</div>
-				欢迎来到Sportgo初级课程的第一课！初级阶段的冰球训练课程，将一些冰球规则和基础性的冰球技巧教授给学员，让学员更加熟悉冰球这一项活动。欢迎来到Sportgo初级课程的第一课！初级阶段的冰球训练课程，将一些冰球规则和基础性的冰球技巧教授给学员，让学员更加熟悉冰球这一项活动！
+				<div v-html="data.desc"></div>
 			</div>
-			<div class="item">
-				<div class="headline">预视频: </div>
-				<div class="box">
-					<img src="static/imgs/pic-6.jpg" alt="" class="box-img" />
+			<div v-for="(item, index) in items" :key="index" class="item">
+				<div class="headline">{{item.label}}: </div>
+				<div v-for="(val, key) in item.list" :key="index+'-'+key" class="box" @click="toVideo(val)">
+					<img :src="val.img" alt="" class="box-img" />
 					<div class="inner">
-						<div class="label">冰球一对一</div>
-						<div class="text">
-							初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！
-						</div>
-					</div>
-				</div>
-				<div class="box">
-					<img src="static/imgs/pic-6.jpg" alt="" class="box-img" />
-					<div class="inner">
-						<div class="label">什么是长期运动发展</div>
-						<div class="text">
-							初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！
-						</div>
-					</div>
-				</div>
-				<div class="box">
-					<img src="static/imgs/pic-6.jpg" alt="" class="box-img" />
-					<div class="inner">
-						<div class="label">冰球运动</div>
-						<div class="text">
-							初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！
-						</div>
+						<div class="label">{{val.title}}</div>
+						<div class="text" v-html="val.desc"></div>
 					</div>
 				</div>
 			</div>
 
-			<div class="item">
-				<div class="headline">练习视频: </div>
-				<div class="box">
-					<img src="static/imgs/pic-6.jpg" alt="" class="box-img" />
-					<div class="inner">
-						<div class="label">滑冰</div>
-						<div class="text">
-							初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！
-						</div>
-					</div>
-				</div>
-				<div class="box">
-					<img src="static/imgs/pic-6.jpg" alt="" class="box-img" />
-					<div class="inner">
-						<div class="label">冰球控制</div>
-						<div class="text">
-							初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！
-						</div>
-					</div>
-				</div>
-				<div class="box">
-					<img src="static/imgs/pic-6.jpg" alt="" class="box-img" />
-					<div class="inner">
-						<div class="label">传球</div>
-						<div class="text">
-							初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="lesson-bottom">
+			
+			<!-- <div class="lesson-bottom">
 				查看更多
 				<img src="static/icons/more.png" alt="" class="more-img" />
-			</div>
+			</div> -->
 		</div>
 	</div>
 </template>		
 
 <script>
+	import {mapState, mapActions} from 'vuex';
 	export default{
 		name : 'lessonItem',
 		data() {
 			return {
-
+				data : this.$route.query || {},
+				items : [
+					{
+						label : '预视频',
+						list : [
+							{
+								title : '冰球一对一',
+								desc  : '初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！',
+								img   : 'static/imgs/pic-6.jpg'
+							},
+							{
+								title : '什么是长期运动发展',
+								desc : '初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！',
+								img   : 'static/imgs/pic-7.jpg'
+							},{
+								title : '冰球运动',
+								desc : '初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！',
+								img   : 'static/imgs/pic-8.jpg'
+							},
+						]
+					},{
+						label : '练习视频',
+						list : [
+							{
+								title : '滑冰',
+								desc  : '初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！',
+								img   : 'static/imgs/pic-1.jpg'
+							},
+							{
+								title : '冰球控制',
+								desc : '初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！',
+								img   : 'static/imgs/pic-2.jpg'
+							},{
+								title : '传球',
+								desc : '初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！',
+								img   : 'static/imgs/pic-3.jpg'
+							},
+						]
+					}
+				]
 			}
+		},
+		computed : mapState({
+			user     : state => state.User.user,
+			token    : state => state.User.token,
+			is_login : state => state.User.isLogin,
+			level    : state => state.Setting.level,
+        }),
+		methods: {
+			onBack() {
+				this.$router.back();
+			},
+			toVideo(data) {
+				this.$router.push({path : 'video', query : {...data}});
+			}
+		},
+		mounted() {
+
 		}
 	}
 </script>

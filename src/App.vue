@@ -6,7 +6,11 @@
 </template>
 
 <script>
+import Vue                    from 'vue';
+import axios                  from 'axios';
 import {mapState, mapActions} from 'vuex';
+
+
 export default {
     name: 'App',
     data () {
@@ -14,14 +18,53 @@ export default {
             value1 : 25
         }
     },
-    computed : mapState({
-        text : state => {
-            console.log('state', state)
-            return ' ////'
+    methods : {
+        ...mapActions([
+            'onLogin',
+        ]),
+        onRefresh(code) {
+            console.log('微信登陆 code', code)
+            this.onLogin({
+                user         : result.data.user,
+                token        : result.data.login.token,
+            });
+        },
+        login(openid) {
+            console.log(Vue.setting.api + '/login')
+            axios.post(Vue.setting.api + '/login', {openid})
+            .then(result => result.data)
+            .then(result => {
+                console.log('登陆', result);
+                this.onLogin({user : result.user})
+            })
+            .catch(err => {
+                console.log('error', err)
+            })
         }
+    },
+    computed : mapState({
     }),
     created() {
-        console.log('mapState', mapState)
+        //获取url中的参数
+        function getUrlParam(name) {
+            const reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            const r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;
+        }
+
+        const code = getUrlParam('code');
+        const openid = getUrlParam('openid');
+        console.log('code', code)
+        if(code) {
+            console.log('code 登陆')
+            this.onRefresh(code);
+        } else if(openid) {
+            console.log('卡片玩家登陆', openid);
+            this.login(openid);
+        } else {
+            console.log('测试玩家登陆');
+            this.login('oJegnv-RgdwmlinNILZxWsUap8Og')
+        }
     }
     
 }
@@ -84,4 +127,24 @@ li{
 .title,.lesson .content .title,.profile .user-name,.profile .profile-btn,.profileEditor .profile-btn,.profileEditor .profile-input,.search .result .title,.video .video-bottom,.video .content{
     font-family: fontM;
 }
+.button {
+    color: #fff;
+    background-color: #212436;
+}
+.link {
+    color           : #212436;
+    border          : none;
+    text-decoration : underline;
+    margin          : 10px 0;
+}
+
+.spin-icon-load{
+    animation: ani-demo-spin 1s linear infinite;
+}
+@keyframes ani-demo-spin {
+    from { transform: rotate(0deg);}
+    50%  { transform: rotate(180deg);}
+    to   { transform: rotate(360deg);}
+}
+
 </style>

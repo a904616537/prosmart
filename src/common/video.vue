@@ -2,9 +2,15 @@
 	<div class="video">
 		<div class="head">
 			<img src="static/icons/video-back.png" alt="" class="icon-style" @click="back"/>
-			力量滑冰
+			{{data.title}}
 		</div>
 		<div class="video-box">
+			<video-player  class="video-player-box"
+             ref="videoPlayer"
+             :options="playerOptions"
+             :playsinline="true"
+             customEventName="customstatechangedeventname">
+  </video-player>
 			
 		</div>
 		<div class="video-bottom">
@@ -14,25 +20,59 @@
 			</div>
 		</div>	
 		<div class="content">
-			<div class="title">力量滑冰</div>
-			<div class="text">
-				在这个ProSmart视频教程中Evan Marble示范如何返回到站在最安全，最快，最可控的方式。跌倒是不可避免的，但爬起来是一种学习的技能。
-			</div>
+			<div class="title">{{data.title}}</div>
+			<div class="text" v-html="data.desc"></div>
 		</div>
 	</div>
 </template>
 
 <script>
+	import {mapState, mapActions} from 'vuex';
 	export default{
-		name : 'video',
+		name : 'videos',
 		data() {
 			return {
-
+				data : this.$route.query || {},
+				playerOptions: {
+					width         : document.body.scrollWidth,
+					muted         : false,
+					playbackRates : [0.7, 1.0, 1.5, 2.0],
+					sources       : [{
+						type          : "video/mp4",
+						src           : "http://image.mybarrefitness.com/images/1537286401184.mp4"
+					}],
+					poster        : this.$route.query.img,
+				}
+			}
+		},
+		computed: {
+			player() {
+				return this.$refs.videoPlayer.player
 			}
 		},
 		methods : {
 			back() {
-				console.log('back')
+				this.$router.back();
+			},
+			// listen event
+			onPlayerPlay(player) {
+				// console.log('player play!', player)
+			},
+			onPlayerPause(player) {
+				// console.log('player pause!', player)
+			},
+			// ...player event
+
+			// or listen state event
+			playerStateChanged(playerCurrentState) {
+				// console.log('player current update state', playerCurrentState)
+			},
+
+			// player is ready
+			playerReadied(player) {
+				console.log('the player is readied', player)
+				// you can use it to do something...
+				// player.[methods]
 			}
 		}
 	}
@@ -57,7 +97,7 @@
 		}
 		.video-box{
 			width: 100%;
-			height: $puplic-space*10;
+			height: 31vh;
 			background: #f4f4f4;
 		}
 		.video-bottom{

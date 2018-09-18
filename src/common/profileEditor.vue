@@ -1,46 +1,79 @@
 <template>
 	<div class="profileEditor">
-		<img src="static/imgs/user-3.jpeg" class="img-style" />
+		<img :src="user.headimgurl" class="img-style" />
 		<div class="item">
 			<label>用户名: </label>
-			<input type="text" placeholder="晴天" class="profile-input" />
+			<input type="text" v-model="data.nickname" placeholder="请输入你的名字" class="profile-input" />
 		</div>
 		<div class="item">
-			<label>邮箱: </label>
-			<input type="text" placeholder="123456789@www.com" class="profile-input" />
+			<label>邮 箱: </label>
+			<input type="text" v-model="data.email" placeholder="请输入你的邮箱" class="profile-input" />
 		</div>
 		<div class="item">
 			<label>手机号: </label>
-			<input type="text" placeholder="187 0027 2737" class="profile-input" />
+			<input type="text" v-model="data.phone" placeholder="请输入你的手机号码" class="profile-input" />
 		</div>
 		<div class="item">
-			<label>性别: </label>
-			<input type="text" placeholder="女" class="profile-input" />
+			<label>性 别: </label>
+			<RadioGroup v-model="data.sex" type="button" class="profile-input" size="small" @on-change="onSex">
+				<Radio label="男"></Radio>
+				<Radio label="女"></Radio>
+			</RadioGroup>
 		</div>
 		<div class="item">
-			<label>生日: </label>
-			<input type="text" placeholder="1995-10-27" class="profile-input" />
+			<label>生 日: </label>
+			<input type="text" v-model="data.born" placeholder="1995-10-27" class="profile-input" />
 		</div>
 		<div class="item">
-			<label>管理: </label>
-			<input type="text" placeholder="父母" class="profile-input" />
+			<label>管 理: </label>
+			<input type="text" v-model="data.manage" placeholder="父母" class="profile-input" />
 		</div>
 		<div class="profile-btn" @click="save">保存</div>
 	</div>
 </template>
 
 <script>
+	import Vue                    from 'vue';
+	import axios                  from 'axios';
+	import {mapState, mapActions} from 'vuex';
+
 	export default{
 		name : 'profileEditor',
 		data() {
 			return {
-
+				data : {},
 			}
 		},
+		computed : mapState({
+			user     : state => state.User.user,
+			token    : state => state.User.token,
+			is_login : state => state.User.isLogin,
+			identity : state => state.User.identity,
+        }),
 		methods: {
+			...mapActions([
+	            'onShowNav',
+	            'onLogin'
+	        ]),
 			save() {
-				console.log('保存修改!')
+				
+				axios.put(Vue.setting.api + '/user/info', this.data)
+				.then(result => result.data)
+				.then(result => {
+	                console.log('保存修改!', result);
+	                this.onLogin({user : result});
+	            })
+	            .catch(err => {
+	                console.log('error', err)
+	            })
+			},
+			onSex(sex) {
+				if(sex == "男") this.data.sex = 1;
+				else this.data.sex = 2;
 			}
+		},
+		mounted() {
+			this.data = {...this.user}
 		}
 	}
 </script>

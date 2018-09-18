@@ -1,32 +1,35 @@
 <template>
 	<div class="profile">
-		<img src="static/imgs/user-3.jpeg" class="img-style" />
-		<div class="user-name">晴天</div>
+		<img :src="user.headimgurl" class="img-style" />
+		<div class="user-name">{{user.nickname}}</div>
 		<div class="item">
 			<img src="static/icons/user/email.png" class="icon" />
-			<span>123456789@www.com</span>
+			<span>{{user.email}}</span>
 		</div>
 		<div class="item">
 			<img src="static/icons/user/phone.png" class="icon" />
-			<span>187 0027 2737</span>
+			<span>{{user.phone}}</span>
 		</div>
 		<div class="item">
 			<img src="static/icons/user/user-sex.png" class="icon" />
-			<span>女</span>
+			<span>{{sex}}</span>
 		</div>
 		<div class="item">
 			<img src="static/icons/user/user-calendar.png" class="icon" />
-			<span>1995-10-27</span>
+			<span>{{user.born}}</span>
 		</div>
 		<div class="item">
 			<img src="static/icons/user/user-icon.png" class="icon" />
-			<span>账号管理者: 父母</span>
+			<span>账号管理者: {{user.manage}}</span>
 		</div>
 		<div class="profile-btn" @click="editor">编辑</div>
 	</div>
 </template>
 
 <script>
+	import Vue                    from 'vue';
+	import axios                  from 'axios';
+	import {mapState, mapActions} from 'vuex';
 	export default{
 		name : 'profile',
 		data() {
@@ -34,7 +37,19 @@
 
 			}
 		},
+		computed : mapState({
+			user     : state => state.User.user,
+			token    : state => state.User.token,
+			is_login : state => state.User.isLogin,
+			identity : state => state.User.identity,
+			sex() {
+				return this.user.sex == 1?"男" : "女";
+			}
+        }),
 		methods: {
+			...mapActions([
+	            'onShowNav',
+	        ]),
 			editor() {
 				this.$router.push({ path : '/editor' })
 			}

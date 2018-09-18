@@ -3,10 +3,12 @@ import Cookie      from 'vue-cookie';
 
 // initial state
 const state = {
-	isLogin      : Cookie.get('user-token') != null && Cookie.get('user-token') != 'undefined',
-	user         : JSON.parse(Cookie.get('user')),
-	token        : Cookie.get('user-token'),
-	username : 'store 数据测试！'
+	isLogin  : Cookie.get('user-token') != null && Cookie.get('user-token') != 'undefined',
+	user     : JSON.parse(Cookie.get('user')),
+	token    : Cookie.get('user-token'),
+	username : 'store 数据测试！',
+	identity : {}					// 身份信息
+
 }
 
 const actions = {
@@ -15,21 +17,24 @@ const actions = {
 	},
 	Logout({commit}, data) {
 		commit(types.USER_LOGOUT, data);
-	}
+	},
+	onSetIdentity({commit}, data) {
+		commit(types.USER_SET_IDENTITY, data);
+	},
 }
 
 // mutations
 const mutations = {
 	[types.USER_LOGIN] (state, data) {
-		const {user, token, platformData} = data;
+		const {user, token} = data;
 		state.user     = user;
+		state.identity = user.identity;
 		Cookie.set('user', JSON.stringify(user));
 
 		if(token) {
 			state.token    = token;
 			Cookie.set('user-token', token);
 		}
-		console.log('get login', token)
 		state.isLogin  = true;
 		state.showFrom = false;
 	},
@@ -39,6 +44,9 @@ const mutations = {
 		state.user    = {};
 		Cookie.delete('user');
 		Cookie.delete('user-token');
+	},
+	[types.USER_SET_IDENTITY] (state, data) {
+		state.identity = data;
 	},
 }
 

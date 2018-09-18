@@ -1,17 +1,20 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Homepage from '@/common/homepage' //公共首页
-import Search from '@/common/search' //搜索团队
-import Profile from '@/common/profile' //个人信息
+import Vue           from 'vue'
+import Router        from 'vue-router'
+import Weclome       from '@/common/weclome' //欢迎页
+import SwitchRoles   from '@/common/index/switchRoles' //欢迎页
+import From          from '@/common/index/from' // 资料填写
+import SearchIndex   from '@/common/index/search' // 搜索
+import Homepage      from '@/common/homepage' //公共首页
+import Search        from '@/common/search' //搜索团队
+import Profile       from '@/common/profile' //个人信息
 import ProfileEditor from '@/common/profileEditor' //编辑个人信息
-import Video from '@/common/video' //视频
-import Lesson from '@/common/lesson' //课程列表
-import LessonItem from '@/common/lessonItem' //详细课程
-import Team from '@/common/team' //团队
-import Group from '@/common/group' //团队信息
-
-import Navbar from '@/components/navbar'
-import Popout from '@/components/popout' //弹框
+import Video         from '@/common/video' //视频
+import Lesson        from '@/common/lesson' //课程列表
+import LessonItem    from '@/common/lessonItem' //详细课程
+import Team          from '@/common/team' //团队
+import Group         from '@/common/group' //团队信息
+import Navbar        from '@/components/navbar'
+import Popout        from '@/components/popout' //弹框
 
 
 Vue.use(Router)
@@ -22,6 +25,24 @@ Vue.component('v-nav', Navbar)
 const routers = [
 	{
 		path      : '/',
+		component : Weclome,
+		children  : [{
+			hidden    : true,
+			path      : '/switchrole',
+			component : SwitchRoles
+		},{
+			hidden    : true,
+			path      : '/from',
+			component : From
+		},{
+			hidden    : true,
+			path      : '/searchindex',
+			component : SearchIndex
+		}]
+
+	},
+	{
+		path      : '/home',
 		component : Homepage
 	},
 	{

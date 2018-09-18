@@ -1,19 +1,18 @@
 <template>
 	<div class="search">
 		<div class="search-bar">
-			<input type="text" class="input-style" placeholder="请输入球队名称或球队代码" @click="focus"/>
-			<div class="icon">
+			<input type="text" v-model="query" class="input-style" placeholder="请输入球队名称或球队代码"/>
+			<div class="icon" @click="onSearch">
 				<img src="static/icons/search.png" class="icon-style" />
 			</div>
 		</div>
 		<div class="search-list" v-show="showList">
-			<li>Sportgo冰球队，上海市静安区，青年组</li>
-			<li>Sportgo冰球分队，湖南省长沙市，少年组</li>
+			<li v-for="(item, index) in result" :key="index" @click="onShowTeam(item)">{{item.info?item.info.name:item.uid}}</li>
 		</div>
-		<div class="result">
+		<div v-for="(val, index) in team" :key="index" class="result">
 			<div class="head">
 				<div class="head-img" style="background-image: url('static/imgs/ball-head.jpg')"></div>
-				<div class="title">Sportgo冰球队</div>
+				<div class="title">{{val.info?val.info.name : val.uid}}</div>
 			</div>
 			<div class="title">球队基础信息</div>
 			<div class="card">
@@ -22,9 +21,10 @@
 				组别:<span>青年组</span><br/>
 				地址:<span>上海市，静安区，康定路，****大楼</span>
 			</div>
+			<div class="puplic-btn" @click="join(val)">申请加入球队</div>
 		</div>
-		<input type="text" class="input-style" placeholder="请输入球队代码" />
-		<div class="puplic-btn" @click="join">申请加入球队</div>
+		<!-- <input type="text" class="input-style" placeholder="请输入球队代码" /> -->
+		
 		<v-popout class="pop-style" v-show="is_show" :click="close">
 			<div class="text">申请成功，等待审核!</div>
 			<div class="puplic-popbtn">确定</div>
@@ -33,24 +33,85 @@
 </template>
 
 <script>
+	import Vue                    from 'vue';
+	import axios                  from 'axios';
+	import {mapState, mapActions} from 'vuex';
+
 	export default{
 		name : 'search',
 		data() {
 			return {
+				query    : '',
 				showList : false,
-				is_show  : false
+				is_show  : false,
+				result   : [],
+				team     : []
 			}
 		},
+		computed : mapState({
+			user     : state => state.User.user,
+			token    : state => state.User.token,
+			is_login : state => state.User.isLogin,
+			identity : state => state.User.identity
+        }),
 		methods: {
+			...mapActions([
+	            'onShowNav',
+	        ]),
+			onSearch() {
+				axios.get(Vue.setting.api + '/team/search', {
+					params: {
+						query : this.query
+					}
+				})
+				.then(result => result.data)
+				.then(result => {
+	                console.log('搜索结果', result);
+	                this.result = result;
+	                this.showList = true;
+	            })
+	            .catch(err => {
+	                console.log('error', err)
+	            })
+			},
+			onShowTeam(item) {
+				this.team = [item];
+				this.showList = false;
+			},
 			focus() {
 				this.showList = !this.showList
 			},
-			join() {
-				this.is_show = !this.is_show
+			// 加入球队
+			join(team) {
+				axios.post(Vue.setting.api + '/team/player', {_id : team._id, player : this.identity._id})
+	            .then(result => result.data)
+	            .then(result => {
+	            	if(result.status) {
+						this.is_show = !this.is_show
+	            	} else this.$Message.warning(result.msg);
+	            })
+	            .catch(err => {
+	                console.log('error', err)
+	            })
 			},
 			close() {
 				this.is_show = false
+			},
+			getAllTeam() {
+				axios.get(Vue.setting.api + '/team')
+				.then(result => result.data)
+				.then(result => {
+	                console.log('搜索结果', result);
+	                this.team = result;
+	            })
+	            .catch(err => {
+	                console.log('error', err)
+	            })
 			}
+		},
+		mounted() {
+			this.onShowNav(true);
+			this.getAllTeam();
 		}
 	}
 </script>
@@ -60,8 +121,10 @@
 	.search{
 		padding: 0 10px;
 		font-size: 14px;
+		padding-bottom : 10vh;
 		.puplic-btn{
 			margin-top: $puplic-space;
+			text-align: center;
 		}
 	}
 	.search-bar{

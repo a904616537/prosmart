@@ -2,8 +2,8 @@
 <template>
 	<div class="homepage">
 		<div class="headline">
-			<span>欢迎你 {{user}}</span>
-			<span>回顾</span>	
+			<span>欢迎你 {{user.nickname}}</span>
+			<span>回顾</span>
 		</div>
 		<div class="card">
 			<div class="title">欢迎来到Sportgo!</div>
@@ -12,16 +12,16 @@
 				把你的冰球队的技能提高到一个新的水平，把我们的运动训练内容，包括进步的实践计划，技能录像和动画训练，附在你计划的事件上。
 			</div>		
 		</div>
-		<div class="lesson">
+		<div class="lesson" @click="toLesson">
 			<div class="title">冰球训练课程</div>
 			<div class="title-img">
 				<div class="img-style" style="background-image: url('static/imgs/pic-3.jpg')"></div>
 			</div>
 		</div>
 		<div class="team">
-			<div class="title">新增球队</div>
+			<div class="title">球队</div>
 			<div class="title-img">
-				<div class="img-style" style="background-image: url('static/imgs/pic-8.jpg')"></div>
+				<div class="img-style" style="background-image: url('static/imgs/pic-8.jpg')" @click="toTeam"></div>
 				<div class="bottom">
 					<router-link to="/search"><span>发现球队</span></router-link>
 					<span @click="popOut">创建球队</span>
@@ -36,21 +36,38 @@
 </template>
 
 <script>
+	import {mapState, mapActions} from 'vuex';
 	export default{
 		name : 'homepage',
 		data() {
 			return {
-				user : 'User Name!',
 				showPop : false
 			}
 		},
+		computed : mapState({
+			user     : state => state.User.user,
+			token    : state => state.User.token,
+			is_login : state => state.User.isLogin,
+        }),
 		methods: {
+			...mapActions([
+	            'onShowNav',
+	        ]),
+			toLesson() {
+				this.$router.push({path : 'lesson'});
+			},
+			toTeam() {
+				this.$router.push({path : 'team'});
+			},
 			popOut() {
 				this.showPop = !this.showPop
 			},
 			close() {
 				this.showPop = false
 			}
+		},
+		mounted() {
+			this.onShowNav(true);
 		}
 	}
 </script>
