@@ -128,7 +128,7 @@
 							duration : 1,
 							content : '提交成功',
 							onClose : () => {
-								this.$router.push({path : 'search'});
+								this.$router.push({path : 'searchindex'});
 							}
 						});
 					}, 1000);

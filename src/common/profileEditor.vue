@@ -62,6 +62,13 @@
 				.then(result => {
 	                console.log('保存修改!', result);
 	                this.onLogin({user : result});
+	                this.$Message.success({
+						duration : 1,
+						content : '提交成功',
+						onClose : () => {
+							this.$router.go(-1)
+						}
+					});
 	            })
 	            .catch(err => {
 	                console.log('error', err)
