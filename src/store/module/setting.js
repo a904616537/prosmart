@@ -2,7 +2,7 @@ import * as types  from '../mutation-types'
 
 // initial state
 const state = {
-	shownav : false,
+	shownav : true,
 	level   : new Map([
 					[0, '初级阶段'],
 					[1, '中级阶段'],

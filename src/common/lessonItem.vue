@@ -9,6 +9,9 @@
 				<img src="static/icons/level.png" class="level-icon" />
 			</div>
 		</div>
+		<div class="switch">
+			<div v-for="(item, index) in [1,2,3,4,5,6,7,8,9,10,11, 12, 13,14,15]" :key="index" class="item" :class="{active : select == item}" @click="select = item">{{item}}</div>
+		</div>
 		<div class="content">
 			<div class="title">
 				<div>
@@ -30,7 +33,7 @@
 			<div v-for="(item, index) in items" :key="index" class="item">
 				<div class="headline">{{item.label}}: </div>
 				<div v-for="(val, key) in item.list" :key="index+'-'+key" class="box" @click="toVideo(val)">
-					<img :src="val.img" alt="" class="box-img" />
+					<img :src="val.img" alt="" class="box-imgs" />
 					<div class="inner">
 						<div class="label">{{val.title}}</div>
 						<div class="text" v-html="val.desc"></div>
@@ -53,8 +56,9 @@
 		name : 'lessonItem',
 		data() {
 			return {
-				data : this.$route.query || {},
-				items : [
+				data   : this.$route.query || {},
+				select : 1,
+				items  : [
 					{
 						label : '预视频',
 						list : [
@@ -115,103 +119,122 @@
 	}
 </script>
 
-<style lang="scss">
-	$puplic-space: 20px;
-	.lessonItem{
-		font-size: 14px;
-		text-align: left;
-		.head{
-			background-color: rgba(33,36,54,.6);
-			color: #fff;
-			display: flex;
-			flex: 1;
-			justify-content: space-between;
-			line-height: $puplic-space*2;
-			padding: 0 $puplic-space/2;
-			font-size: 15px;
-			font-family: fontM;
-			font-weight: 500;
-			.back-icon{
-				width: 17px;
-				height: 17px;
-				margin-right: $puplic-space/2;
-				vertical-align: middle;
-			}
-			.level-icon{
-				width: 28px;
-				height: 28px;
-				vertical-align: middle;
-			}
-		}
-		.content{
-			.title{
-				display: flex;
-				justify-content: space-between;
-				padding: 0 $puplic-space/2;
-				font-size: 15px;
-				line-height: 40px;
-				margin-top: 50px;
-				.share-img{
-					width: 20px;
-					height: 20px;
-					vertical-align: middle;
-				}
-				span{
-					width: 11px;
-					display: inline-block;
-				}
-			}
-			.img-style{
-				width: 100%;
-				height: 200px;
-				background-size: cover;
-				background-repeat: no-repeat;
-			}
-			.item{
-				padding: $puplic-space $puplic-space/2;
-				font-size: 14px;
-				border-bottom: 1px solid rgba(33,36,54,.1);
-				.label{
-					font-family: fontM;
-					font-weight: 500;
-					margin-bottom: $puplic-space/4;
-					.intro{
-						font-size: 15px;
-						margin-bottom: $puplic-space/2;
-					}
-				}
-				.headline{
-					margin-bottom: -10px;
-					font-size: 15px;
-					font-family: fontM;
-					font-weight: 500;
-				}
-				.box{
-					border-bottom: 1px solid rgba(33,36,54,.1);
-					display: flex;
-					flex: 1;
-					padding: $puplic-space 0;
-					.box-img{
-						width: 110px;
-						height: 110px;
-						border-radius: 8px;
-						margin-right: $puplic-space/2;
-					}
-				}
-				.box:last-child{
-					border: none;
-					padding-bottom: 10px;
-				}
-			}
-			.lesson-bottom{
-				text-align: center;
-				line-height: 60px;
-				font-size: 12px;
-				.more-img{
-					width: 11px;
-					height: 11px;
-				}
-			}
-		}
-	}
+<style scoped>
+.lessonItem{
+	font-size  : 14px;
+	text-align : left;
+}
+.lessonItem .head{
+	background-color : rgba(33,36,54,.6);
+	color            : #fff;
+	display          : flex;
+	justify-content  : space-between;
+	line-height      : 40px;
+	padding          : 0 10px;
+	font-size        : 15px;
+	font-family      : fontM;
+	font-weight      : 500;
+}
+.lessonItem .head .back-icon{
+	width          : 17px;
+	height         : 17px;
+	margin-right   : 10px;
+	vertical-align : middle;
+}
+.lessonItem .head .level-icon{
+	width: 28px;
+	height: 28px;
+	vertical-align: middle;
+}
+.lessonItem .switch {
+	height                     : 50px;
+	display                    : -webkit-box;
+	overflow-x                 : scroll;
+	-webkit-overflow-scrolling :touch;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+.lessonItem .switch .item{
+	width           : 10vw;
+	line-height     : 50px;
+	font-size       : 10pt;
+	color           : #313131;
+	display         : flex;
+	align-items     : center;
+	justify-content : center;
+}
+.lessonItem .switch .item.active {
+	color: #ccc;
+}
+.lessonItem .content{
+}
+.lessonItem .content .title{
+	display         : flex;
+	padding         : 0 10px;
+	font-size       : 15px;
+	line-height     : 40px;
+	justify-content : space-between;
+}
+.lessonItem .content .title .share-img{
+	width          : 20px;
+	height         : 20px;
+	vertical-align : middle;
+}
+.lessonItem .content .title span{
+	width   : 11px;
+	display : inline-block;
+}
+.lessonItem .content .img-style{
+	width             : 100%;
+	height            : 200px;
+	background-size   : cover;
+	background-repeat : no-repeat;
+}
+.lessonItem .content .item{
+	padding       : 20px 10px;
+	font-size     : 14px;
+	border-bottom : 1px solid rgba(33,36,54,.1);
+}
+.lessonItem .content .item .label{
+	font-family: fontM;
+	font-weight: 500;
+	margin-bottom: 5px;
+}
+.lessonItem .content .item .label .intro{
+	font-size: 15px;
+	margin-bottom: 10px;
+}
+.lessonItem .content .item .headline{
+	display       : block;
+	margin-bottom : -10px;
+	font-size     : 15px;
+	font-family   : fontM;
+	font-weight   : 500;
+}
+.lessonItem .content .item .box{
+	display         : flex;
+	flex-direction  : row;
+	align-items     : flex-start;
+	justify-content : flex-start;
+	padding         : 20px 0;
+	border-bottom   : 1px solid rgba(33,36,54,.1);
+}
+.lessonItem .content .item .box .box-imgs{
+	width         : 110px;
+	height        : 110px;
+	border-radius : 8px;
+	margin-right  : 10px;
+}
+.lessonItem .content .item .box:last-child{
+	border         : none;
+	padding-bottom : 10px;
+}
+.lessonItem .content .lesson-bottom{
+	text-align  : center;
+	line-height : 60px;
+	font-size   : 12px;
+}
+.lessonItem .content .lesson-bottom .more-img{
+	width  : 11px;
+	height : 11px;
+}
 </style>

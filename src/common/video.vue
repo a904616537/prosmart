@@ -6,11 +6,14 @@
 		</div>
 		<div class="video-box">
 			<video-player  class="video-player-box"
-             ref="videoPlayer"
-             :options="playerOptions"
-             :playsinline="true"
+			ref="videoPlayer"
+			:options="playerOptions"
+			:playsinline="true"
              customEventName="customstatechangedeventname">
-  </video-player>
+  			</video-player>
+			<div class="play" @click="onPlay">
+				<img v-show="show_play" src="static/icons/play.png" class="play-btn">
+			</div>
 			
 		</div>
 		<div class="video-bottom">
@@ -32,10 +35,12 @@
 		name : 'videos',
 		data() {
 			return {
+				show_play : true,
 				data : this.$route.query || {},
 				playerOptions: {
 					width         : document.body.scrollWidth,
 					muted         : false,
+					controls      : false,
 					playbackRates : [0.7, 1.0, 1.5, 2.0],
 					sources       : [{
 						type          : "video/mp4",
@@ -56,10 +61,21 @@
 			},
 			// listen event
 			onPlayerPlay(player) {
-				// console.log('player play!', player)
+				// 播放中，隐藏按钮
+				this.show_play = false;
 			},
 			onPlayerPause(player) {
-				// console.log('player pause!', player)
+				// 暂停，显示按钮
+				this.show_play = true;
+			},
+			onPlay() {
+				if(this.show_play) {
+					this.show_play = false;
+					this.player.play();
+				} else {
+					this.show_play = true;
+					this.player.pause();
+				}
 			},
 			// ...player event
 
@@ -74,6 +90,11 @@
 				// you can use it to do something...
 				// player.[methods]
 			}
+		},
+		mounted() {
+
+				// console.log('this.$refs.videoPlayer.player', this.$refs.videoPlayer.player)
+				// this.$refs.videoPlayer.player.play();
 		}
 	}
 </script>
@@ -97,8 +118,23 @@
 		}
 		.video-box{
 			width: 100%;
-			height: 31vh;
 			background: #f4f4f4;
+			position: relative;
+			
+			.play {
+				width: 100%;
+				height : 100%;
+				top: 0;
+				position: absolute;
+				z-index: 99999;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				.play-btn {
+					margin: 0 auto;
+    				width: 20vw;
+				}
+			}
 		}
 		.video-bottom{
 			line-height: 40px;

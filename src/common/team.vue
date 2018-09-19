@@ -5,8 +5,14 @@
 
 			<div v-for="(item, index) in team" :key="index" class="card">
 				<div class="team-name">{{item.info?item.info.name:item.uid}}</div>
-				<div v-if="identity._id == item.identity" class="operate"><img src="static/icons/point.png" class="card-icon"/></div>
-				<span v-else class="card-btn" @click="exit(item)">退出球队</span>
+				<Dropdown trigger="click">
+			        <a href="javascript:void(0)">
+			            <div class="operate"><img src="static/icons/point.png" class="card-icon"/></div>
+			        </a>
+			        <DropdownMenu slot="list">
+			            <DropdownItem><span class="card-btn" @click="exit(item)">退出球队</span></DropdownItem>
+			        </DropdownMenu>
+			    </Dropdown>
 			</div>
 
 		</div>
@@ -106,12 +112,12 @@
 					vertical-align: middle;
 				}
 				.card-btn{
-					height: 28px;
-					line-height: 28px;
-					color: #fff;
-					background-color: #AAAAAA;
-					margin-top: 7px;
-					padding: 0 14px;
+					height           : 28px;
+					line-height      : 28px;
+					color            : #fff;
+					background-color : #AAAAAA;
+					margin-top       : 7px;
+					padding          : 0 14px;
 				}
 			}
 		}

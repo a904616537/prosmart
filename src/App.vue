@@ -24,9 +24,14 @@ export default {
         ]),
         onRefresh(code) {
             console.log('微信登陆 code', code)
-            this.onLogin({
-                user         : result.data.user,
-                token        : result.data.login.token,
+
+            axios.post(Vue.setting.api + '/wechat/oauth/login?code=' + code)
+            .then((response) => {
+                console.log('code登陆', response);
+                this.onLogin({user : response.user})
+            })
+            .catch((error) => {
+                console.log('error', error)
             });
         },
         login(openid) {

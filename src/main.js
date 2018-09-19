@@ -23,7 +23,7 @@ Vue.use(VueVideoPlayer, {});
 
 Vue.setting = {
 	// api : 'http://192.168.0.102:8081',
-	api : 'https://7296bf1d.ngrok.io',
+	api : 'http://testserver.eatisco.com',
 }
 
 

@@ -15,7 +15,7 @@
 		<div class="content">
 
 			<div v-for="(item, index) in items" :key="index" class="item" @click="toItem(item)">
-				<img :src="item.img" alt="" class="img-style" />
+				<img :src="item.img" alt="" class="img-styles" />
 				<div class="inner">
 					<div class="title">{{item.title}}({{level.get(level_key)}})</div>
 					<div class="text">{{item.desc}}</div>
@@ -87,67 +87,67 @@
 	}
 </script>
 
-<style lang="scss">
-	$puplic-space: 20px;
-	.lesson{
-		font-size: 14px;
-		.head{
-			background-color: rgba(33,36,54,.6);
-			color: #fff;
-			display: flex;
-			flex: 1;
-			justify-content: space-between;
-			line-height: $puplic-space*2;
-			padding: 0 $puplic-space/2;
-			.back-icon{
-				width: 17px;
-				height: 17px;
-				margin-right: $puplic-space/2;
-				vertical-align: middle;
-			}
-			.level-icon{
-				width: 28px;
-				height: 28px;
-				vertical-align: middle;
-			}
-		}
-		.head-nav{
-			line-height: $puplic-space*2;
-			padding: 0 $puplic-space/2;
-			box-shadow: 0 2px 4px rgba(0,0,0,.35);
-			display: flex;
-			flex: 1;
-			justify-content: space-around;
-			li{
-				display: inline-block;
-			}
-			.checked{
-				color: #AAAAAA;
-			}
-		}
-		.content{
-			.item{
-				padding: $puplic-space $puplic-space/2;
-				display         : flex;
-				text-align      : left;
-				border-bottom   : 1px solid rgba(33, 36, 54, 0.1);
-				flex-direction  : row;
-				align-items     : center;
-				justify-content : flex-start;
+<style scoped>
+.lesson {
+	font-size: 14px;
+}
+.lesson .head{
+	background-color: rgba(33,36,54,.6);
+	color: #fff;
+	display: flex;
+	flex: 1;
+	justify-content: space-between;
+	line-height: 40px;
+	padding: 0 10px;
+}
+.lesson .head .back-icon{
+	width: 17px;
+	height: 17px;
+	margin-right: 10px;
+	vertical-align: middle;
+}
+.lesson .head .level-icon{
+	width: 28px;
+	height: 28px;
+	vertical-align: middle;
+}
+.lesson .head-nav{
+	line-height: 40px;
+	padding: 0 10px;
+	box-shadow: 0 2px 4px rgba(0,0,0,.35);
+	display: flex;
+	flex: 1;
+	justify-content: space-around;
+	
+}
+.lesson .head-nav li{
+	display: inline-block;
+}
+.lesson .head-nav .checked{
+	color: #AAAAAA;
+}
+.lesson .content{
+}
 
-				.img-style{
-					width: 110px;
-					height: 110px;
-					border-radius: 8px;
-					margin-right: $puplic-space/2;
-				}
-				.title{
-					font-family: fontM;
-					font-weight: 500;
-					font-size: 15px;
-					margin-bottom: $puplic-space/2;
-				}
-			}
-		}
-	}
+.lesson .content .item{
+	padding: 10px 10px;
+	display         : flex;
+	border-bottom   : 1px solid rgba(33, 36, 54, 0.1);
+	flex-direction  : row;
+	align-items     : flex-start;
+	justify-content : flex-start;
+	text-align      : left;
+}
+.lesson .content .item .img-styles{
+	width         : 110px;
+	height        : 110px;
+	border-radius : 8px;
+	margin-right  : 10px;
+}
+.lesson .content .item .title{
+	font-family   : fontM;
+	font-weight   : 500;
+	font-size     : 15px;
+	margin-bottom : 10px;
+}
 </style>
