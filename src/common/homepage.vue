@@ -32,17 +32,33 @@
 			<div class="text">创建球队将进入教练登录页面</div>
 			<div class="puplic-popbtn">教练登录</div>
 		</v-popout>
+
+
+		<Modal v-model="modal" width="360" @on-visible-change="onChange" :closable="false" class-name="vertical-center-modal">
+	        <div style="text-align:center">
+	            <v-video ref="homevideo" :width="350" />
+	        </div>
+	        <div slot="footer" style="text-align: center;">
+	        	<p>先从一段基础视频开始吧</p>
+	        </div>
+	    </Modal>
+
 	</div>
 </template>
 
 <script>
+	import Video      from '@/components/video';
 	import {mapState, mapActions} from 'vuex';
 	export default{
 		name : 'homepage',
 		data() {
 			return {
+				modal   : false,
 				showPop : false
 			}
+		},
+		components : {
+			'v-video' : Video
 		},
 		computed : mapState({
 			user     : state => state.User.user,
@@ -64,15 +80,27 @@
 			},
 			close() {
 				this.showPop = false
+			},
+			onChange(e) {
+				console.log('this.$refs.homevideo.player.pause()', this.$refs.homevideo.player)
+				if(!e) {
+					this.$refs.homevideo.player.pause()
+				}
 			}
 		},
 		mounted() {
 			this.onShowNav(true);
+			setTimeout(() => {
+				this.modal = true;
+			}, 1000);
 		}
 	}
 </script>
 
 <style lang="scss">
+	.ivu-modal-body {
+		padding : 0;
+	}
 	$title: 15px;
 	$puplic-space: 20px;
 	.homepage{

@@ -25,7 +25,7 @@ export default {
         onRefresh(code) {
             console.log('微信登陆 code', code)
 
-            axios.post(Vue.setting.api + '/wechat/oauth/login?code=' + code)
+            axios.get(Vue.setting.api + '/wechat/oauth/login?code=' + code)
             .then((response) => {
                 console.log('code登陆', response);
                 this.onLogin({user : response.user})
