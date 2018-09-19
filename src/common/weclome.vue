@@ -34,8 +34,8 @@
 			this.onShowNav(false);
 			setTimeout(() => {
 					this.show = true;
-					// this.$router.replace({path : '/switchrole'});
-					this.$router.replace({path : '/lesson'});
+					this.$router.replace({path : '/switchrole'});
+					// this.$router.replace({path : '/lesson'});
 			}, 1000);
 		}
 	}
