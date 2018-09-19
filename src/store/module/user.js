@@ -28,7 +28,7 @@ const mutations = {
 	[types.USER_LOGIN] (state, data) {
 		const {user, token} = data;
 		state.user     = user;
-		state.identity = user.identity;
+		state.identity = user.identity || {};
 		Cookie.set('user', JSON.stringify(user));
 
 		if(token) {

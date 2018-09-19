@@ -28,7 +28,7 @@ export default {
             axios.get(Vue.setting.api + '/wechat/oauth/login?code=' + code)
             .then((response) => {
                 console.log('code登陆', response);
-                this.onLogin({user : response.user})
+                this.onLogin({user : response.data})
             })
             .catch((error) => {
                 console.log('error', error)
