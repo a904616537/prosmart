@@ -88,6 +88,7 @@
 						duration : 1,
 						content : `身份切换成功：${this.selectRole.title}`,
 						onClose : () => {
+							// this.$router.push({path : '/from', query : {type : this.selectRole.type}});
 							if(result.identity) {
 								this.$router.push({path : 'home'});
 							} else this.$router.push({path : '/from', query : {type : this.selectRole.type}});
@@ -122,8 +123,8 @@
 .switchrole .item .btn {
 	margin           : 0 auto;
 	width            : 40vw;
-	padding          : 1vh 0;
-	font-size        : 10pt;
+	padding          : 1.5vh 0;
+	font-size        : 12pt;
 	color            : #fff;
 	background-color : #313131;
 	border-radius    : 5px;

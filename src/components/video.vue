@@ -4,8 +4,10 @@
 		ref="videoPlayer"
 		:options="playerOptions"
 		:playsinline="true"
-         customEventName="customstatechangedeventname">
-			</video-player>
+		@play="_Play"
+		@pause="onEnd"
+		customEventName="customstatechangedeventname">
+     	</video-player>
 		<div class="play" @click="onPlay">
 			<img v-show="show_play" src="static/icons/play.png" class="play-btn">
 		</div>
@@ -27,16 +29,28 @@
 					playbackRates : [0.7, 1.0, 1.5, 2.0],
 					sources       : [{
 						type          : "video/mp4",
-						src           : "http://image.mybarrefitness.com/images/1537286401184.mp4"
+						src           : this.src
 					}],
-					poster        : this.$route.query.img || 'static/imgs/pic-2.jpg',
+					poster        : this.$route.query.img || this.poster,
 				}
 			}
 		},
 		props: {
+			src : {
+				type    : String,
+				default : "http://image.mybarrefitness.com/images/1537286401184.mp4"
+			},
+			poster : {
+				type    : String,
+				default : 'static/imgs/pic-2.jpg'
+			},
 			click: {
 				type : Function,
 				default : () => console.log('clost')
+			},
+			end : {
+				type : Function,
+				default : () => console.log('end')
 			},
 			width : {
 				type    : Number,
@@ -57,12 +71,19 @@
 				// 暂停，显示按钮
 				this.show_play = true;
 			},
+			_Play() {
+				this.show_play = false;
+			},
+			onEnd() {
+				console.log('end')
+				this.show_play = true;
+				this.end();
+			},
 			onPlay() {
 				if(this.show_play) {
 					this.show_play = false;
 					this.player.play();
 				} else {
-					this.show_play = true;
 					this.player.pause();
 				}
 			},

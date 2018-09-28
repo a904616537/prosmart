@@ -138,6 +138,9 @@
 	justify-content : flex-start;
 	text-align      : left;
 }
+.lesson .content .item .inner {
+	width: 65vw;
+}
 .lesson .content .item .img-styles{
 	width         : 110px;
 	height        : 110px;

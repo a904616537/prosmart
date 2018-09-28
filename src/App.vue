@@ -133,8 +133,12 @@ li{
     font-family: fontM;
 }
 .button {
-    color: #fff;
-    background-color: #212436;
+    color            : #fff;
+    width            : 40vw;
+    height           : 6vh;
+    font-size        : 12pt;
+    border-radius    : 5px;
+    background-color : #212436;
 }
 .link {
     color           : #212436;

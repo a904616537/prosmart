@@ -218,6 +218,9 @@
 	padding         : 20px 0;
 	border-bottom   : 1px solid rgba(33,36,54,.1);
 }
+.lessonItem .content .item .box .inner {
+	width: 65vw;
+}
 .lessonItem .content .item .box .box-imgs{
 	width         : 110px;
 	height        : 110px;

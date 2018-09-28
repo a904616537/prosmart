@@ -3,11 +3,11 @@
 	<div class="weclome">
 		<div class="logos" :class="{active : show}">
 			<img src="static/logo/Sportgo_Logo_RGB.png">
-			<p>成长的玩家，成长的游戏</p>
+			<p>Learn. Play. Connect.</p>
 		</div>
-
+	 <transition :name="transition" mode="out-in">
 		<router-view />
-		
+	</transition>
 	</div>
 </template>
 
@@ -17,13 +17,14 @@
 		name : 'weclome',
 		data() {
 			return {
-				show : false
+				show : false,
 			}
 		},
 		computed : mapState({
-			user     : state => state.User.user,
-			token    : state => state.User.token,
-			is_login : state => state.User.isLogin,
+			user       : state => state.User.user,
+			token      : state => state.User.token,
+			is_login   : state => state.User.isLogin,
+			transition : state => state.Setting.transition
         }),
 		methods: {
 			...mapActions([
@@ -34,8 +35,8 @@
 			this.onShowNav(false);
 			setTimeout(() => {
 					this.show = true;
-					this.$router.replace({path : '/switchrole'});
-					// this.$router.replace({path : '/lesson'});
+					// this.$router.replace({path : '/switchrole'});
+					this.$router.replace({path : '/cutvideo'});
 			}, 1000);
 		}
 	}
@@ -51,7 +52,7 @@
 	overflow        : hidden;
 }
 .weclome .logos{
-	width           : 50vw;
+	width           : 60vw;
 	height          : 100vh;
 	display         : flex;
 	flex-direction  : column;
@@ -69,5 +70,20 @@
 	margin-top : 1em;
 	font-size  : 10pt;
 
+}
+
+.translation-enter-active {
+  animation: translation-in 0.5s;
+}
+.translation-leave-active {
+  animation: translation-in 0.5s reverse;
+}
+@keyframes translation-in {
+  0% {
+    transform: translate(100vw, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
 }
 </style>

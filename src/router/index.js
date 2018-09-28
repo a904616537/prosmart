@@ -1,6 +1,7 @@
 import Vue           from 'vue'
 import Router        from 'vue-router'
 import Weclome       from '@/common/weclome' //欢迎页
+import LogoVideo     from '@/common/index/logoVideo' //欢迎页
 import SwitchRoles   from '@/common/index/switchRoles' //欢迎页
 import From          from '@/common/index/from' // 资料填写
 import SearchIndex   from '@/common/index/search' // 搜索
@@ -27,6 +28,10 @@ const routers = [
 		path      : '/',
 		component : Weclome,
 		children  : [{
+			hidden    : true,
+			path      : '/cutvideo',
+			component : LogoVideo
+		},{
 			hidden    : true,
 			path      : '/switchrole',
 			component : SwitchRoles
