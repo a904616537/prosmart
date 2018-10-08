@@ -8,8 +8,8 @@
 		@pause="onEnd"
 		customEventName="customstatechangedeventname">
      	</video-player>
-		<div class="play" @click="onPlay">
-			<img v-show="show_play" src="static/icons/play.png" class="play-btn">
+		<div v-show="show_play" class="play" @click="onPlay" :style="'background-image: url('+playerOptions.poster+');'">
+			<img src="static/icons/play.png" class="play-btn">
 		</div>
 		
 	</div>
@@ -105,7 +105,9 @@
 </script>
 
 <style scoped>
+
 .video-box{
+
 	width: 100%;
 	background: #f4f4f4;
 	position: relative;	
@@ -119,6 +121,9 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	background-color: #fff;
+	background-size: 100%;
+	background-repeat: no-repeat;
 }
 .video-box .play .play-btn {
 		margin: 0 auto;

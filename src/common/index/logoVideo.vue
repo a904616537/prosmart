@@ -14,7 +14,7 @@
 		name : 'logovideo',
 		data() {
 			return {
-				video : 'http://image.mybarrefitness.com/images/1537286401184.mp4'
+				video : 'static/logo/Sportgo.mp4'
 			}
 		},
 		components : {
