@@ -22,6 +22,7 @@
 				地址:<span>上海市，静安区，康定路，****大楼</span>
 			</div>
 			<div class="puplic-btn" @click="join(val)">申请加入球队</div>
+			<!-- <div class="puplic-btn" @click="join(val)">申请成为助理教练</div> -->
 		</div>
 		<!-- <input type="text" class="input-style" placeholder="请输入球队代码" /> -->
 		

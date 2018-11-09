@@ -142,6 +142,7 @@
 		text-align: left;
 		padding: 0 10px;
 		font-size: $title;
+		margin-bottom: $puplic-space;
 		.headline{
 			display: flex;
 			justify-content: space-between;
