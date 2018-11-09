@@ -61,10 +61,10 @@
 	transition      : height 1s;
 }
 .weclome .logos.active {
-	height: 40vh;
+	height : 40vh;
 }
 .weclome .logos img {
-	width: 100%;
+	width : 100%;
 }
 .weclome .logos p {
 	margin-top : 1em;

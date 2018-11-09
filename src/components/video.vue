@@ -105,9 +105,7 @@
 </script>
 
 <style scoped>
-
 .video-box{
-
 	width: 100%;
 	background: #f4f4f4;
 	position: relative;	
@@ -126,7 +124,7 @@
 	background-repeat: no-repeat;
 }
 .video-box .play .play-btn {
-		margin: 0 auto;
-		width: 20vw;
-	}
+	margin: 0 auto;
+	width: 20vw;
+}
 </style>
