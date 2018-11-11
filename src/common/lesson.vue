@@ -130,7 +130,7 @@
 }
 
 .lesson .content .item{
-	padding: 10px 10px;
+	padding         : 10px 10px;
 	display         : flex;
 	border-bottom   : 1px solid rgba(33, 36, 54, 0.1);
 	flex-direction  : row;
@@ -146,11 +146,11 @@
 	height        : 110px;
 	border-radius : 8px;
 	margin-right  : 10px;
+	vertical-align: middle;
 }
 .lesson .content .item .title{
 	font-family   : fontM;
 	font-weight   : 500;
 	font-size     : 15px;
-	margin-bottom : 10px;
 }
 </style>

@@ -19,7 +19,6 @@ import Popout        from '@/components/popout' //弹框
 import Activity      from '@/common/activity' //回顾所有活动
 import Course        from '@/common/course' //play用户所有课程（已学习/未学习） 
 
-
 Vue.use(Router)
 Vue.component('v-popout', Popout)
 Vue.component('v-nav', Navbar)

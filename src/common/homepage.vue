@@ -12,6 +12,15 @@
 				把你的冰球队的技能提高到一个新的水平，把我们的运动训练内容，包括进步的实践计划，技能录像和动画训练，附在你计划的事件上。
 			</div>		
 		</div>
+		<div class="img-box">
+			<nav>
+				<div class="item" style="background-image: url('static/imgs/pic-1.jpg')"></div>
+				<div class="item" style="background-image: url('static/imgs/pic-4.jpg')"></div>
+				<div class="item" style="background-image: url('static/imgs/pic-5.jpg')"></div>
+				<div class="item" style="background-image: url('static/imgs/pic-6.jpg')"></div>
+				<div class="item" style="background-image: url('static/imgs/pic-8.jpg')"></div>
+			</nav>
+		</div>
 		<div class="lesson" @click="toLesson">
 			<div class="title">冰球训练课程</div>
 			<div class="title-img">
@@ -24,15 +33,15 @@
 				<div class="histroy" @click="allActivity">回顾</div>
 			</div>
 			<!-- 没有活动显示 -->
-			<!-- <div class="title-img">
+			<div class="title-img">
 				<div class="img-style">
 					<img class="icon-style" src="static/icons/add.png" />
 					<p>你还没有球队哦，请先添加一个球队</p>
 				</div>
-			</div> -->
+			</div>
 
 			<!-- 有活动显示 -->
-			<div class="card">
+			<!-- <div class="card">
 				<label>练习冰球时间</label>
 				<p><img class="icon" src="static/icons/time.png" alt=""/>2018-8-27, 9:00-14:00</p>
 				<label>练习冰球地点</label>
@@ -43,7 +52,7 @@
 					<div class="">Sportgo冰球</div>
 					<div class=""><img src="static/icons/share.png" class="icon" alt="分享"/></div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 		<div class="team">
 			<div class="title">球队</div>
@@ -84,6 +93,7 @@
 <script>
 	import Video      from '@/components/video';
 	import {mapState, mapActions} from 'vuex';
+
 	export default{
 		name : 'homepage',
 		data() {
@@ -93,7 +103,7 @@
 			}
 		},
 		components : {
-			'v-video' : Video
+			'v-video'  : Video
 		},
 		computed : mapState({
 			user     : state => state.User.user,
@@ -235,6 +245,27 @@
 		.icon-style{
 			width: 50px;
 			margin: 50px auto 0;
+		}
+	}
+	.img-box{
+		width: 100%;
+		margin: 20px 0 0;
+		overflow: hidden;
+		nav{
+		    display: flex;
+		    height: 124px;
+		    align-items: middle;
+		    overflow: auto;
+		    .item{
+		    	width: 150px;
+		    	height: 120px;
+		    	background-position: center;
+		    	background-size: cover;
+		    	flex-shrink: 0;
+			    margin-right: 10px;
+			    border-radius: 10px;
+			    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+		    }
 		}
 	}
 </style>
