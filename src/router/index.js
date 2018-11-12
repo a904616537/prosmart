@@ -16,6 +16,7 @@ import Team          from '@/common/team' //团队
 import Group         from '@/common/group' //团队信息
 import Navbar        from '@/components/navbar'
 import Popout        from '@/components/popout' //弹框
+import Calendar      from '@/common/calendar' //活动日历
 import Activity      from '@/common/activity' //回顾所有活动
 import Course        from '@/common/course' //play用户所有课程（已学习/未学习） 
 
@@ -90,6 +91,10 @@ const routers = [
 	{
 		path      : '/course',
 		component : Course
+	},
+	{
+		path      : '/calendar',
+		component : Calendar
 	}
 ]
 
