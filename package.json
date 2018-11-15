@@ -18,7 +18,7 @@
     "moment": "^2.22.2",
     "sass": "^1.13.0",
     "sass-loader": "^7.1.0",
-    "video.js": "^7.2.2",
+    "video.js": "^7.3.0",
     "vue": "^2.5.2",
     "vue-cookie": "^1.1.4",
     "vue-pickers": "^1.1.5",

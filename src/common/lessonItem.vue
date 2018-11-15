@@ -56,47 +56,8 @@
 		name : 'lessonItem',
 		data() {
 			return {
-				data   : this.$route.query || {},
+				data   : {item : []},
 				select : 1,
-				items  : [
-					{
-						label : '预视频',
-						list : [
-							{
-								title : '冰球一对一',
-								desc  : '初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！',
-								img   : 'static/imgs/pic-6.jpg'
-							},
-							{
-								title : '什么是长期运动发展',
-								desc : '初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！',
-								img   : 'static/imgs/pic-7.jpg'
-							},{
-								title : '冰球运动',
-								desc : '初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！',
-								img   : 'static/imgs/pic-8.jpg'
-							},
-						]
-					},{
-						label : '练习视频',
-						list : [
-							{
-								title : '滑冰',
-								desc  : '初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！',
-								img   : 'static/imgs/pic-1.jpg'
-							},
-							{
-								title : '冰球控制',
-								desc : '初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！',
-								img   : 'static/imgs/pic-2.jpg'
-							},{
-								title : '传球',
-								desc : '初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！',
-								img   : 'static/imgs/pic-3.jpg'
-							},
-						]
-					}
-				]
 			}
 		},
 		computed : mapState({
@@ -104,6 +65,12 @@
 			token    : state => state.User.token,
 			is_login : state => state.User.isLogin,
 			level    : state => state.Setting.level,
+			lesson   : state => state.Lesson.lesson,
+			items() {
+				return [
+				{label : '预视频', list : typeof this.data.item == 'object'?this.data.item.filter(val => val.type == 0):[]},
+				{label : '练习视频', list : typeof this.data.item == 'object'?this.data.item.filter(val => val.type == 1):[]}];
+			}
         }),
 		methods: {
 			onBack() {
@@ -114,7 +81,7 @@
 			}
 		},
 		mounted() {
-
+			this.data = this.lesson.find(val => val._id == this.$route.query._id)
 		}
 	}
 </script>

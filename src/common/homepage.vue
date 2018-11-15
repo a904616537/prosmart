@@ -33,15 +33,15 @@
 				<div class="histroy" @click="allActivity">回顾</div>
 			</div>
 			<!-- 没有活动显示 -->
-			<div class="title-img">
+			<!-- <div class="title-img" @click="toSearch">
 				<div class="img-style">
 					<img class="icon-style" src="static/icons/add.png" />
 					<p>你还没有球队哦，请先添加一个球队</p>
 				</div>
-			</div>
+			</div> -->
 
 			<!-- 有活动显示 -->
-			<!-- <div class="card">
+			<div class="card">
 				<label>练习冰球时间</label>
 				<p><img class="icon" src="static/icons/time.png" alt=""/>2018-8-27, 9:00-14:00</p>
 				<label>练习冰球地点</label>
@@ -52,7 +52,7 @@
 					<div class="">Sportgo冰球</div>
 					<div class=""><img src="static/icons/share.png" class="icon" alt="分享"/></div>
 				</div>
-			</div> -->
+			</div>
 		</div>
 		<div class="team">
 			<div class="title">球队</div>
@@ -119,6 +119,9 @@
 			},
 			toTeam() {
 				this.$router.push({path : 'team'});
+			},
+			toSearch() {
+				this.$router.push({path : 'search'});
 			},
 			popOut() {
 				this.showPop = !this.showPop

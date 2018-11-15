@@ -16,7 +16,7 @@
 			<li @click="toPage('/lesson')">冰球课程</li>
 			<li @click="toPage('/search')">发现球队</li>
 			<li @click="toPage('/team')">我的球队</li>
-			<li @click="toPage('/profile')">活动日历</li>
+			<li @click="toPage('/calendar')">活动日历</li>
 			<li @click="toPage('/profile')">冰球商店</li>
 		</div>
 	</div>

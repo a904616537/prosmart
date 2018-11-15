@@ -5,7 +5,7 @@
 			{{data.title}}
 		</div>
 		
-		<v-video />
+		<v-video :src="data.video"/>
 		<div class="video-bottom">
 			<div class="inner">
 				<img src="static/icons/share.png" class="share-icon">
