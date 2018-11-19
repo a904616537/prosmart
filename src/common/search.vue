@@ -10,7 +10,7 @@
 			<li v-for="(item, index) in result" :key="index" @click="onShowTeam(item)">{{item.info?item.info.name:item.uid}}</li>
 		</div>
 		<div v-for="(val, index) in team" :key="index" class="result">
-			<div class="head">
+			<div class="head" @click="toGroup">
 				<div class="head-img" style="background-image: url('static/imgs/ball-head.jpg')"></div>
 				<div class="title">{{val.info?val.info.name : val.uid}}</div>
 			</div>
@@ -59,6 +59,9 @@
 			...mapActions([
 	            'onShowNav',
 	        ]),
+	        toGroup() {
+	        	this.$router.push({ path : '/group' })
+	        },
 			onSearch() {
 				axios.get(Vue.setting.api + '/team/search', {
 					params: {

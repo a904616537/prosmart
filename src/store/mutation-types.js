@@ -7,3 +7,5 @@ export const  USER_SET_IDENTITY = 'user/set/identity';
 
 export const SETTING_SHOWNAV      = 'setting/shownav';
 export const SETTING_UPDATE_TRANS = 'setting/update/trans';
+
+export const SET_LESSON = 'lesson/set';

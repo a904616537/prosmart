@@ -14,7 +14,7 @@
 		</div>
 		<div class="content">
 
-			<div v-for="(item, index) in items" :key="index" class="item" @click="toItem(item)">
+			<div v-for="(item, index) in levelList" :key="index" class="item" @click="toItem(item)">
 				<img :src="item.img" alt="" class="img-styles" />
 				<div class="inner">
 					<div class="title">{{item.title}}({{level.get(level_key)}})</div>
@@ -27,35 +27,14 @@
 </template>
 
 <script>
+	import Vue                    from 'vue';
+	import axios                  from 'axios';
 	import {mapState, mapActions} from 'vuex';
 	export default{
 		name : 'lesson',
 		data() {
 			return {
-				level_key : 0,
-				items : [
-					{
-						title : '冰球课程',
-						desc : '初级阶段的冰球训练课程，将一些冰球规则和基础性的冰球技巧教授给学员，让学员更加熟悉冰球这一项活动',
-						img : 'static/imgs/pic-1.jpg',
-						level : 0
-					},{
-						title : '技能',
-						desc : '在这个技能视频教程中Evan Marble示范如何返回到站在最安全，最快，最可控的方式。跌倒是不可避免的，但爬起来是一种学习的技能。',
-						img : 'static/imgs/pic-2.jpg',
-						level : 1
-					},{
-						title : '演习',
-						desc : '初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！',
-						img : 'static/imgs/pic-3.jpg',
-						level : 2
-					},{
-						title : '生活健康',
-						desc : '初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！',
-						img : 'static/imgs/pic-4.jpg',
-						level : 1
-					},
-				]
+				level_key : 0
 			}
 		},
 		computed : mapState({
@@ -63,25 +42,49 @@
 			token    : state => state.User.token,
 			is_login : state => state.User.isLogin,
 			level    : state => state.Setting.level,
+			lesson   : state => state.Lesson.lesson,
 			levelArray() {
 				let arr =[];
 				for (let [key, value] of this.level) {
 					arr.push(value);
 				}
 				return arr;
+			},
+			levelList() {
+				return this.lesson.filter(val => val.level == this.level_key)
 			}
         }),
 		methods: {
+			...mapActions([
+				'setLesson',
+			]),
 			onSwitch(index) {
 				this.level_key = index;
 			},
 			onBack() {
 				this.$router.back();
 			},
+			getData() {
+				axios.get(Vue.setting.api + '/course/all', {
+					params: {}
+				})
+				.then(result => result.data)
+				.then(result => {
+	                console.log('搜索结果', result);
+	                this.setLesson(result.data)
+	            })
+	            .catch(err => {
+	                console.log('error', err)
+	            })
+			},
 			toItem(val) {
+				console.log('toitem', val)
 				Object.assign(val, {level : this.level_key});
-				this.$router.push({path : 'lessonItem', query : {...val}});
+				this.$router.push({path : 'lessonItem', query : {_id : val._id}});
 			}
+		},
+		mounted() {
+			this.getData();
 		}
 		
 	}
