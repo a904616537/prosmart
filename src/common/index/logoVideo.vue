@@ -35,10 +35,15 @@
 		},
 		mounted() {
 			setTimeout(() => {
-				this.$refs.logovideo.player.play();
+				if(this.$refs.logovideo) {
+					this.$refs.logovideo.player.play();
+				}
+				
 				this.onUpdateTrans('translation');
 				setTimeout(() => {
-					this.$refs.logovideo.player.pause()
+					if(this.$refs.logovideo) {
+						this.$refs.logovideo.player.pause()
+					}
 				}, 5000);
 			}, 2000);
 

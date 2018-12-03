@@ -30,7 +30,7 @@
 				</div>
 				<div v-html="data.desc"></div>
 			</div>
-			<div v-for="(item, index) in items" :key="index" class="item">
+			<div v-for="(item, index) in items" :key="index" v-if="item" class="item">
 				<div class="headline">{{item.label}}: </div>
 				<div v-for="(val, key) in item.list" :key="index+'-'+key" class="box" @click="toVideo(val)">
 					<img :src="val.img" alt="" class="box-imgs" />
@@ -68,8 +68,8 @@
 			lesson   : state => state.Lesson.lesson,
 			items() {
 				return [
-				{label : '预视频', list : typeof this.data.item == 'object'?this.data.item.filter(val => val.type == 0):[]},
-				{label : '练习视频', list : typeof this.data.item == 'object'?this.data.item.filter(val => val.type == 1):[]}];
+				{label : '预视频', list : typeof this.data.item == 'object'?this.data.item.filter(val => val && val.type == 0):[]},
+				{label : '练习视频', list : typeof this.data.item == 'object'?this.data.item.filter(val => val && val.type == 1):[]}];
 			}
         }),
 		methods: {
@@ -81,7 +81,9 @@
 			}
 		},
 		mounted() {
-			this.data = this.lesson.find(val => val._id == this.$route.query._id)
+			if(this.lesson && this.lesson.length > 0) {
+				this.data = this.lesson.find(val => val._id == this.$route.query._id)
+			} else this.$router.back(-1)
 		}
 	}
 </script>
