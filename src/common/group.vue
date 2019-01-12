@@ -15,8 +15,8 @@
 		</div>
 		<div class="title">球员列表</div>
 		<div class="card card-box">
-			<div v-for="(item, index) in data.players" :key="index" class="item-list">
-				<div class="item">
+			<div class="item-list">
+				<div  v-for="(item, index) in data.players" :key="index" class="item">
 					<img :src="item.user.headimgurl || 'static/imgs/user-1.jpeg'" class="user-img" />
 					{{item.info.name}}
 				</div>
