@@ -27,21 +27,14 @@
 				<div class="img-style" style="background-image: url('static/imgs/pic-3.jpg')"></div>
 			</div>
 		</div>
-		<div class="activity">
+		<!-- <div class="activity">
 			<div class="box-title">
 				<div class="title">下个活动</div>
 				<div class="histroy" @click="allActivity">回顾</div>
-			</div>
-			<!-- 没有活动显示 -->
-			<!-- <div class="title-img" @click="toSearch">
-				<div class="img-style">
-					<img class="icon-style" src="static/icons/add.png" />
-					<p>你还没有球队哦，请先添加一个球队</p>
-				</div>
 			</div> -->
 
 			<!-- 有活动显示 -->
-			<div class="card">
+			<!-- <div class="card">
 				<label>练习冰球时间</label>
 				<p><img class="icon" src="static/icons/time.png" alt=""/>2018-8-27, 9:00-14:00</p>
 				<label>练习冰球地点</label>
@@ -53,16 +46,26 @@
 					<div class=""><img src="static/icons/share.png" class="icon" alt="分享"/></div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<div class="team">
 			<div class="title">球队</div>
-			<div class="title-img">
+			<div v-if="show_team" class="title-img">
 				<div class="img-style" style="background-image: url('static/imgs/pic-8.jpg')" @click="toTeam"></div>
 				<div class="bottom">
 					<router-link to="/search"><span>发现球队</span></router-link>
 					<span @click="popOut">创建球队</span>
 				</div>
 			</div>
+			<!-- 没有活动显示 -->
+			<div v-else class="activity">
+				<div class="title-img" @click="toSearch">
+					<div class="img-style">
+						<img class="icon-style" src="static/icons/add.png" />
+						<p>你还没有球队哦，请先添加一个球队</p>
+					</div>
+				</div>
+			</div>
+			
 		</div>
 		<div class="shop">
 			<div class="title">冰球商店</div>
@@ -72,7 +75,7 @@
 		</div>
 		<v-popout class="pop-style" v-show="showPop" :click="close">
 			<div class="text">创建球队将进入教练登录页面</div>
-			<div class="puplic-popbtn">教练登录</div>
+			<div class="puplic-popbtn" @click="toLogin">教练登录</div>
 		</v-popout>
 
 
@@ -91,6 +94,9 @@
 </template>
 
 <script>
+	import Vue                    from 'vue';
+	import axios                  from 'axios';
+	import Cookie      from 'vue-cookie';
 	import Video      from '@/components/video';
 	import {mapState, mapActions} from 'vuex';
 
@@ -106,14 +112,32 @@
 			'v-video'  : Video
 		},
 		computed : mapState({
-			user     : state => state.User.user,
-			token    : state => state.User.token,
-			is_login : state => state.User.isLogin,
+			user       : state => state.User.user,
+			token      : state => state.User.token,
+			is_login   : state => state.User.isLogin,
+			identity   : state => state.User.identity,
+			coach      : state => state.User.coach,
+			team       : state => state.Team.team,
+			show_video : state => state.Setting.show_video,
+			show_team() {
+				return this.team.length > 0 || this.identity.type == 2
+			}
         }),
 		methods: {
 			...mapActions([
 	            'onShowNav',
+	            'setTeam'
 	        ]),
+	        getMyTeam() {
+				axios.get(Vue.setting.api + '/team/player', {
+					params: {identity_id : this.identity._id}
+				})
+				.then(result => result.data)
+				.then(result => this.setTeam(result))
+	            .catch(err => {
+	                console.log('error', err)
+	            })
+			},
 			toLesson() {
 				this.$router.push({path : 'lesson'});
 			},
@@ -123,14 +147,18 @@
 			toSearch() {
 				this.$router.push({path : 'search'});
 			},
+			toLogin() {
+				this.$router.push({path : 'switchrole'});
+			},
 			popOut() {
-				this.showPop = !this.showPop
+				if(!this.coach) this.showPop = !this.showPop;
+				else this.$router.push({path : 'create'});
 			},
 			close() {
 				this.showPop = false
 			},
 			onChange(e) {
-				console.log('this.$refs.homevideo.player.pause()', this.$refs.homevideo.player)
+				// console.log('this.$refs.homevideo.player.pause()', this.$refs.homevideo.player)
 				if(!e) {
 					this.$refs.homevideo.player.pause()
 				}
@@ -141,9 +169,13 @@
 		},
 		mounted() {
 			this.onShowNav(true);
-			setTimeout(() => {
-				this.modal = true;
-			}, 1000);
+			this.getMyTeam();
+			if(!this.show_video) {
+				Cookie.set('show_video', 'true', { expires: '15D' });
+				setTimeout(() => {
+					this.modal = true;
+				}, 1000);
+			}
 		}
 	}
 </script>

@@ -1,7 +1,9 @@
 import * as types  from '../mutation-types'
+import Cookie      from 'vue-cookie';
 
 // initial state
 const state = {
+	show_video : Cookie.get('show_video'),
 	transition : '',
 	shownav    : true,
 	level      : new Map([

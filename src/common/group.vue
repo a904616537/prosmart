@@ -1,62 +1,87 @@
 <template>
 	<div class="group">
 		<div class="head">
-			<div class="head-img" style="background-image: url('static/imgs/ball-head.jpg')"></div>
-			<div class="title">Sportgo冰球队</div>
+			<img :src="data.info.header_logo || 'static/imgs/ball-head.jpg'" class="head-img">
+			<div class="title">{{data.info.name || data.uid}}</div>
 		</div>
 		<div class="title">球队具体信息</div>
 		<div class="card">
-			教练:<span>Coach</span><br/>
-			人数:<span>15人</span><br/>
-			分布:<span><img src="static/icons/boy.png" class="boy-icon" />11 , <img src="static/icons/girl.png" class="girl-icon" />4</span><br/>
-			组别:<span>青年组</span><br/>
-			地址:<span>上海市，静安区，康定路，****大楼</span><br/>
-			时间:<span>成立于2014年6月8日</span>
+			教练:<span>{{data.info.coach_name||'未知'}}</span><br/>
+			人数:<span>{{data.players.length}}人</span><br/>
+			分布:<span><img src="static/icons/boy.png" class="boy-icon" /> {{boy}}人, <img src="static/icons/girl.png" class="girl-icon" /> {{girl}}人</span><br/>
+			组别:<span>{{data.info.group||'未知'}}</span><br/>
+			地址:<span>{{data.info.address||'未知'}}</span><br/>
+			时间:<span>{{time}}</span>
 		</div>
 		<div class="title">球员列表</div>
 		<div class="card card-box">
-			<div class="item-list">
+			<div v-for="(item, index) in data.players" :key="index" class="item-list">
 				<div class="item">
-					<img src="static/imgs/user-1.jpeg" class="user-img" />
-					user
-				</div>
-				<div class="item">
-					<img src="static/imgs/user-2.jpeg" class="user-img" />
-					user
-				</div>
-				<div class="item">
-					<img src="static/imgs/user-3.jpeg" class="user-img" />
-					user
-				</div>
-				<div class="item">
-					<img src="static/imgs/user-4.jpeg" class="user-img" />
-					user
-				</div>
-				<div class="item">
-					<img src="static/imgs/user-2.jpeg" class="user-img" />
-					user
-				</div>
-				<div class="item">
-					<img src="static/imgs/user-1.jpeg" class="user-img" />
-					user
-				</div>
-				<div class="item">
-					<img src="static/imgs/user-3.jpeg" class="user-img" />
-					user
+					<img :src="item.user.headimgurl || 'static/imgs/user-1.jpeg'" class="user-img" />
+					{{item.info.name}}
 				</div>
 			</div>
-			<p class="more">查看更多<img src="static/icons/more.png" class="more-icon"/></p>
+			<p v-if="!showMore && data.players.length > 5" class="more" @click="showMore = true">查看更多<img src="static/icons/more.png" class="more-icon"/></p>
 		</div>
 	</div>
 </template>
 
 <script>
+	import Vue                    from 'vue';
+	import moment                 from 'moment';
+	import axios                  from 'axios';
+	import {mapState, mapActions} from 'vuex';
 	export default{
 		name : 'group',
 		data() {
 			return {
-
+				data : {
+					info    : {},
+					players : []
+				},
+				showMore : false
 			}
+		},
+		computed : mapState({
+			user     : state => state.User.user,
+			time() {
+				return moment(this.data.CreateTime).format('成立于YYYY年M月D日');
+			},
+			boy() {
+				return this.data.players.filter(val => val.type == 1).length;
+			},
+			girl() {
+				return this.data.players.filter(val => val.type == 2).length;
+			},
+			showPlayes() {
+				if(this.showMore) return this.data.players;
+				else this.data.players.slice(0, 5);
+			}
+        }),
+		methods: {
+			...mapActions([
+	            'onShowNav',
+	        ]),
+	        getData(_id) {
+	        	axios.get(Vue.setting.api + '/team/id', {
+					params: {_id}
+				})
+				.then(result => result.data)
+				.then(result => {
+					console.log('球队信息', result)
+	                this.data = result;
+	            })
+	            .catch(err => {
+	                console.log('error', err)
+	            })
+	        }
+		},
+		mounted() {
+			this.onShowNav(true);
+
+			if(this.$route.query && this.$route.query._id) {
+				this.getData(this.$route.query._id)
+			} else this.$router.back(-1)
 		}
 	}
 </script>

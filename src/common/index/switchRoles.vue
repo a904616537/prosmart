@@ -55,7 +55,8 @@
 		methods: {
 			...mapActions([
 	            'onShowNav',
-	            'onSetIdentity'
+	            'onSetIdentity',
+	            'clearTeam'
 	        ]),
 			toPage(path) {
 				this.$router.push({path});
@@ -75,6 +76,7 @@
 			},
 			getIdentity() {
 				console.log(Vue.setting.api + '/user')
+				this.clearTeam();
 				axios.put(Vue.setting.api + '/user',{
 					user : this.user._id,
 					type : this.selectRole.type

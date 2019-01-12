@@ -19,6 +19,8 @@ import Popout        from '@/components/popout' //弹框
 import Calendar      from '@/common/calendar' //活动日历
 import Activity      from '@/common/activity' //回顾所有活动
 import Course        from '@/common/course' //play用户所有课程（已学习/未学习） 
+import CreateTeam    from '@/common/create_team'	// 创建团队
+import ManageTeam    from '@/common/manage'	// 管理团队
 
 Vue.use(Router)
 Vue.component('v-popout', Popout)
@@ -46,7 +48,6 @@ const routers = [
 			path      : '/searchindex',
 			component : SearchIndex
 		}]
-
 	},
 	{
 		path      : '/home',
@@ -95,7 +96,17 @@ const routers = [
 	{
 		path      : '/calendar',
 		component : Calendar
-	}
+	},
+	{
+		path      : '/create',
+		component : CreateTeam
+	},
+	{
+		path      : '/manage',
+		component : ManageTeam
+	},
+	
+	
 ]
 
 

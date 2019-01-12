@@ -7,7 +7,8 @@ const state = {
 	user     : JSON.parse(Cookie.get('user')),
 	token    : Cookie.get('user-token'),
 	username : 'store 数据测试！',
-	identity : {}					// 身份信息
+	coach    : false,
+	identity : {},					// 身份信息
 
 }
 
@@ -29,6 +30,8 @@ const mutations = {
 		const {user, token} = data;
 		state.user     = user;
 		state.identity = user.identity || {};
+		if(state.identity.type == 2) state.coach = true;
+		else state.coach = false;
 		Cookie.set('user', JSON.stringify(user));
 
 		if(token) {
@@ -47,6 +50,8 @@ const mutations = {
 	},
 	[types.USER_SET_IDENTITY] (state, data) {
 		state.identity = data;
+		if(state.identity.type == 2) state.coach = true;
+		else state.coach = false;
 	},
 }
 

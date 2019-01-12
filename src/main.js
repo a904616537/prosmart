@@ -23,6 +23,7 @@ Vue.use(iView, {
 Vue.use(VueVideoPlayer, {});
 
 Vue.setting = {
+	uploadUrl : "http://106.14.94.210:8082/upload",
 	// api : 'http://localhost:8081',
 	api : 'http://testserver.eatisco.com',
 }

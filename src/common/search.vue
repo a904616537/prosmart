@@ -7,19 +7,19 @@
 			</div>
 		</div>
 		<div class="search-list" v-show="showList">
-			<li v-for="(item, index) in result" :key="index" @click="onShowTeam(item)">{{item.info?item.info.name:item.uid}}</li>
+			<li v-for="(item, index) in result" :key="index" @click="onShowTeam(item)">{{item.info.name || item.uid}}</li>
 		</div>
 		<div v-for="(val, index) in team" :key="index" class="result">
-			<div class="head" @click="toGroup">
-				<div class="head-img" style="background-image: url('static/imgs/ball-head.jpg')"></div>
-				<div class="title">{{val.info?val.info.name : val.uid}}</div>
+			<div class="head" @click="toGroup(val._id)">
+				<img :src="val.info.header_logo || 'static/imgs/ball-head.jpg'" class="head-img">
+				<div class="title">{{val.info.name || val.uid}}</div>
 			</div>
 			<div class="title">球队基础信息</div>
-			<div class="card">
-				教练:<span>Coach</span><br/>
-				人数:<span>15人</span><br/>
-				组别:<span>青年组</span><br/>
-				地址:<span>上海市，静安区，康定路，****大楼</span>
+			<div class="card" @click="toGroup(val._id)">
+				教练:<span>{{val.info.coach_name||'未知'}}</span><br/>
+				人数:<span>{{val.players.length}}人</span><br/>
+				组别:<span>{{val.info.group||'未知'}}</span><br/>
+				地址:<span>{{val.info.address||'未知'}}</span>
 			</div>
 			<div class="puplic-btn" @click="join(val)">申请加入球队</div>
 			<!-- <div class="puplic-btn" @click="join(val)">申请成为助理教练</div> -->
@@ -59,8 +59,8 @@
 			...mapActions([
 	            'onShowNav',
 	        ]),
-	        toGroup() {
-	        	this.$router.push({ path : '/group' })
+	        toGroup(_id) {
+	        	this.$router.push({ path : '/group', query : {_id}})
 	        },
 			onSearch() {
 				axios.get(Vue.setting.api + '/team/search', {
@@ -70,7 +70,7 @@
 				})
 				.then(result => result.data)
 				.then(result => {
-	                console.log('搜索结果', result);
+					console.log('onSearch', result)
 	                this.result = result;
 	                this.showList = true;
 	            })

@@ -2,7 +2,7 @@
 <template>
 <div class="dropdown">
 	<div class="view">
-		<input class="input" type="text" v-bind:value="value" v-on:input="$emit('input', $event.target.value)" @click="onClick" @blur="onBlur"/>
+		<input class="input" :style="input_class" type="text" :placeholder="placeholder" v-bind:value="value" v-on:input="$emit('input', $event.target.value)" @click="onClick" @blur="onBlur"/>
 		<Icon v-if="display" type="md-arrow-dropdown" size="20" class="icon" :class="[focus ? 'rotate-icon-load' : 'rotate-icon-load-end']"/>
 	</div>
 	<div v-if="display" class="list" :class="{active : focus}">
@@ -21,7 +21,9 @@
 			}
 		},
 		props : {
+			placeholder : '',
 			value : '',
+			input_class : '',
 			change : {
 				type    : Function,
 				default : () => {}

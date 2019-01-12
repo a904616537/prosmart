@@ -9,3 +9,6 @@ export const SETTING_SHOWNAV      = 'setting/shownav';
 export const SETTING_UPDATE_TRANS = 'setting/update/trans';
 
 export const SET_LESSON = 'lesson/set';
+
+export const SET_TEAM   = 'team/set';
+export const CLEAR_TEAM = 'team/clear';

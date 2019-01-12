@@ -78,7 +78,6 @@
 	            })
 			},
 			toItem(val) {
-				console.log('toitem', val)
 				Object.assign(val, {level : this.level_key});
 				this.$router.push({path : 'lessonItem', query : {_id : val._id}});
 			}
