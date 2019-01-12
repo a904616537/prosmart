@@ -174,7 +174,7 @@
 	align-items     : center;
 	flex-direction  : row;
 	flex-wrap       : wrap;
-	margin          : 10px 0;
+	margin          : 20px 0;
 }
 .footer{
 	padding    : 2em 0;
