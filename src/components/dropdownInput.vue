@@ -68,6 +68,7 @@
 }
 .dropdown .view .input {
 	height : 20px;
+	border  : none;
 }
 .dropdown .view .input:focus {
 	border  : none;
