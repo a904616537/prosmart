@@ -22,8 +22,9 @@ Vue.use(iView, {
 Vue.use(VueVideoPlayer, {});
 
 Vue.setting = {
+	api : 'http://server.sportgochina.com',
 	// api : 'http://192.168.0.102:8081',
-	api : 'http://testserver.eatisco.com',
+	// api : 'http://testserver.eatisco.com',
 }
 
 
