@@ -55,7 +55,8 @@
 		methods: {
 			...mapActions([
 	            'onShowNav',
-	            'onSetIdentity'
+	            'onSetIdentity',
+	            'clearTeam'
 	        ]),
 			toPage(path) {
 				this.$router.push({path});
@@ -75,6 +76,7 @@
 			},
 			getIdentity() {
 				console.log(Vue.setting.api + '/user')
+				this.clearTeam();
 				axios.put(Vue.setting.api + '/user',{
 					user : this.user._id,
 					type : this.selectRole.type
@@ -83,13 +85,12 @@
 				.then(result => {
 					console.log('切换用户身份', result)
 					this.onCanel();
-					this.onSetIdentity(result.identity);
 					this.$Message.success({
 						duration : 1,
 						content : `身份切换成功：${this.selectRole.title}`,
 						onClose : () => {
-							// this.$router.push({path : '/from', query : {type : this.selectRole.type}});
 							if(result.identity) {
+								this.onSetIdentity(result.identity);
 								this.$router.push({path : 'home'});
 							} else this.$router.push({path : '/from', query : {type : this.selectRole.type}});
 							

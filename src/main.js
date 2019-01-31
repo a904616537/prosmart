@@ -8,6 +8,7 @@ import Mixins from './Mixins'
 import iView  from 'iview'
 import VueVideoPlayer from 'vue-video-player'
 
+
 import 'iview/dist/styles/iview.css'
 import 'video.js/dist/video-js.css'
 

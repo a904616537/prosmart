@@ -4,8 +4,8 @@
 		<div class="content">
 
 			<div v-for="(item, index) in team" :key="index" class="card">
-				<div class="team-name">{{item.info?item.info.name:item.uid}}</div>
-				<Dropdown trigger="click">
+				<div class="team-name">{{item.info.name||item.uid}}</div>
+				<Dropdown v-if="identity._id != item.identity" trigger="click">
 			        <a href="javascript:void(0)">
 			            <div class="operate"><img src="static/icons/point.png" class="card-icon"/></div>
 			        </a>
@@ -13,9 +13,16 @@
 			            <DropdownItem><span class="card-btn" @click="exit(item)">退出球队</span></DropdownItem>
 			        </DropdownMenu>
 			    </Dropdown>
+			    <div v-else @click="toManage(item._id)">
+			    	<p>球员管理</p>
+			    </div>
 			</div>
 
 		</div>
+		<div v-if="coach" class="footer" @click="toCreate">
+			<div class="puplic-btn footer_btn"><Icon :size="18" type="ios-add-circle-outline" />创建球队</div>
+		</div>
+		
 		<v-popout class="pop-style" v-show="showPop" :click="close">
 			<div class="text">确认退出球队？</div>
 			<div class="btn">
@@ -35,14 +42,16 @@
 		data() {
 			return {
 				showPop : false,
-				team    : []
+				team    : [],
+				exitTeam : null
 			}
 		},
 		computed : mapState({
 			user     : state => state.User.user,
 			token    : state => state.User.token,
 			is_login : state => state.User.isLogin,
-			identity : state => state.User.identity
+			identity : state => state.User.identity,
+			coach      : state => state.User.coach,
         }),
 		methods: {
 			...mapActions([
@@ -64,6 +73,12 @@
 			},
 			close() {
 				this.showPop = false
+			},
+			toCreate() {
+				this.$router.push({path : 'create'});
+			},
+			toManage(_id) {
+				this.$router.push({path : 'manage', query : {_id}});
 			},
 			onExit() {
 				axios.delete(Vue.setting.api + '/team/player', {
@@ -129,6 +144,17 @@
 				display: flex;
 				justify-content: space-around;
 			}
+		}
+		.footer {
+			position: fixed;
+			bottom: 20px;
+			text-align: center;
+			width: 100%;
+		}
+		.footer_btn{
+			width: 200px;
+			text-align:center;
+			margin: 0 auto;
 		}
 	}
 </style>

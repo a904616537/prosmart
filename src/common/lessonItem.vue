@@ -10,7 +10,8 @@
 			</div>
 		</div>
 		<div class="switch">
-			<div v-for="(item, index) in [1,2,3,4,5,6,7,8,9,10,11, 12, 13,14,15]" :key="index" class="item" :class="{active : select == item}" @click="select = item">{{item}}</div>
+
+			<div v-for="(item, index) in lesson_items" :key="index" class="item" :class="{active : select == item._id}" @click="onSwitchLessonItem(item._id)">{{item.title}}</div>
 		</div>
 		<div class="content">
 			<div class="title">
@@ -30,7 +31,7 @@
 				</div>
 				<div v-html="data.desc"></div>
 			</div>
-			<div v-for="(item, index) in items" :key="index" class="item">
+			<div v-for="(item, index) in items" :key="index" v-if="item.list.length > 0" class="item">
 				<div class="headline">{{item.label}}: </div>
 				<div v-for="(val, key) in item.list" :key="index+'-'+key" class="box" @click="toVideo(val)">
 					<img :src="val.img" alt="" class="box-imgs" />
@@ -56,47 +57,8 @@
 		name : 'lessonItem',
 		data() {
 			return {
-				data   : this.$route.query || {},
-				select : 1,
-				items  : [
-					{
-						label : '预视频',
-						list : [
-							{
-								title : '冰球一对一',
-								desc  : '初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！',
-								img   : 'static/imgs/pic-6.jpg'
-							},
-							{
-								title : '什么是长期运动发展',
-								desc : '初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！',
-								img   : 'static/imgs/pic-7.jpg'
-							},{
-								title : '冰球运动',
-								desc : '初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！',
-								img   : 'static/imgs/pic-8.jpg'
-							},
-						]
-					},{
-						label : '练习视频',
-						list : [
-							{
-								title : '滑冰',
-								desc  : '初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！',
-								img   : 'static/imgs/pic-1.jpg'
-							},
-							{
-								title : '冰球控制',
-								desc : '初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！',
-								img   : 'static/imgs/pic-2.jpg'
-							},{
-								title : '传球',
-								desc : '初级阶段的演习是新手刚开始接触冰球时必不可少的一个阶段！',
-								img   : 'static/imgs/pic-3.jpg'
-							},
-						]
-					}
-				]
+				lesson_items : [],
+				select : this.$route.query._id,
 			}
 		},
 		computed : mapState({
@@ -104,6 +66,15 @@
 			token    : state => state.User.token,
 			is_login : state => state.User.isLogin,
 			level    : state => state.Setting.level,
+			lesson   : state => state.Lesson.lesson,
+			items() {
+				return [
+				{label : '预视频', list : typeof this.data.item == 'object'?this.data.item.filter(val => val && val.type == 0):[]},
+				{label : '练习视频', list : typeof this.data.item == 'object'?this.data.item.filter(val => val && val.type == 1):[]}];
+			},
+			data() {
+				return this.lesson.find(val => val._id == this.select);
+			}
         }),
 		methods: {
 			onBack() {
@@ -111,10 +82,15 @@
 			},
 			toVideo(data) {
 				this.$router.push({path : 'video', query : {...data}});
+			},
+			onSwitchLessonItem(_id) {
+				this.select = _id;
 			}
 		},
 		mounted() {
-
+			if(this.lesson && this.lesson.length > 0) {
+				this.lesson_items = this.lesson.filter(val => val.level == this.data.level)
+			} else this.$router.back(-1)
 		}
 	}
 </script>
@@ -154,7 +130,7 @@
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
 }
 .lessonItem .switch .item{
-	width           : 10vw;
+	margin: 0 10px;
 	line-height     : 50px;
 	font-size       : 10pt;
 	color           : #313131;
