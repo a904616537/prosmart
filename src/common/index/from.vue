@@ -26,7 +26,7 @@
 					<span><label>12.</label>为自己喜爱的球队而战！请点选一个你喜欢的球队！</span>
 					<div class="rounds">
 						<div v-for="(item, index) in teams" :key="index" class="round" :class="{active : item == data.like}" @click="onLike(item)">
-							{{item}}
+							<img class="round" v-bind:src="'static/imgs/' + item">
 						</div>
 					</div>
 				</li>
@@ -67,6 +67,12 @@
 					'NHL_Canadiens_Primary.jpg',
 					'NHL_MapleLeafs_Primary.jpg',
 					'NHL_Flames_Primary.jpg',
+					'NHL_Capitals_Primary.jpg',
+					'NHL_Penguins_Primary.jpg',
+					'NHL_Rangers_Primary.jpg',
+					'NHL_Jets_Primary.jpg',
+					'NHL_Kings_Primary.jpg',
+					'NHL_Oilers_Primary.jpg',
 				],
 				data : {
 					name       : '',	// 名字
