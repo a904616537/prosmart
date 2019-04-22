@@ -9,18 +9,16 @@
 			<div class="title">欢迎来到Sportgo!</div>
 			<div class="text">
 				像任何俱乐部或团队一样，Sportgo在被整个团队使用时效果最好。<br/>
-				把你的冰球队的技能提高到一个新的水平，把我们的运动训练内容，包括进步的实践计划，技能录像和动画训练，附在你计划的事件上。。
+				把你的冰球队的技能提高到一个新的水平，把我们的运动训练内容，包括进步的实践计划，技能录像和动画训练，附在你计划的事件上。
 			</div>
 		</div>
 		<div class="img-box">
 			<nav>
-				<div class="lesson" @click="toLesson">
-					<div class="item" style="background-image: url('static/imgs/pic-1.jpg')"></div>
-				</div>
-					<div class="item" style="background-image: url('static/imgs/pic-4.jpg')"></div>
-					<div class="item" style="background-image: url('static/imgs/pic-5.jpg')"></div>
-					<div class="item" style="background-image: url('static/imgs/pic-6.jpg')"></div>
-					<div class="item" style="background-image: url('static/imgs/pic-8.jpg')"></div>
+					<div class="item" style="background-image: url('static/imgs/pic-1.jpg')" @click="toLesson"></div>
+					<div class="item" style="background-image: url('static/imgs/pic-4.jpg')" @click="toLesson"></div>
+					<div class="item" style="background-image: url('static/imgs/pic-5.jpg')" @click="toLesson"></div>
+					<div class="item" style="background-image: url('static/imgs/pic-6.jpg')" @click="toLesson"></div>
+					<div class="item" style="background-image: url('static/imgs/pic-8.jpg')" @click="toLesson"></div>
 			</nav>
 		</div>
 		<div class="lesson" @click="toLesson">
