@@ -34,10 +34,9 @@
 					<span><label>13.</label>有竞争就有对手，选出你不喜欢的球队吧！</span>
 					<div class="rounds">
 						<div v-for="(item, index) in teams" :key="index" class="round" :class="{active : item == data.hate}" @click="onHate(item)">
-							<img v-bind:src="'static/imgs/${item}'">
+							<img v-bind:src="'static/imgs/' + item">
 						</div>
 					</div>
-
 				</li>
 			</ul>
 			<div class="footer">
